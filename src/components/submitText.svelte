@@ -75,6 +75,7 @@
         padding-top: 20px;
         max-width: 640px;
     }
+    
     textarea {
         border: none;
         background-color: white;
