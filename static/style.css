@@ -1,0 +1,23 @@
+body {
+    font-family: "Fk Raster", sans-serif;
+    margin: 0;
+    font-size: 18px;
+    text-rendering: optimizeLegibility;
+    background: #cbffcb;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+    font-weight: 400;
+    margin: 0;
+}
+
+@font-face {
+    font-family: "Fk Raster";
+    src: url("./fonts/FKRasterRomanCompactTrial-Smooth.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
