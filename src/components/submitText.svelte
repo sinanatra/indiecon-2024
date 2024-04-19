@@ -1,6 +1,7 @@
 <script>
     let text = "";
     let emotion = "";
+    let message = "";
 
     const handleSubmit = async () => {
         if (!text.trim()) {
@@ -22,6 +23,7 @@
 
         if (response.ok) {
             console.log("Data submitted successfully");
+            message = "Data submitted successfully";
         } else {
             console.error("Error submitting data");
         }
@@ -29,14 +31,29 @@
 </script>
 
 <section>
-    <textarea name="answer" id="answer" bind:value={text}></textarea>
-    <input
-        type="number"
-        name="emotion"
-        id="emotion"
-        bind:value={emotion}
-        min="1"
-        max="5"
-    />
-    <button on:click={handleSubmit}>Submit</button>
+    {#if message}
+        <div class="message">
+            <p>{message}</p>
+            <a href="/" target="_self">Please Refresh the page</a>
+        </div>
+    {:else}
+        <textarea name="answer" id="answer" bind:value={text}></textarea>
+        <input
+            type="number"
+            name="emotion"
+            id="emotion"
+            bind:value={emotion}
+            min="1"
+            max="5"
+        />
+        <button on:click={handleSubmit}>Submit</button>
+    {/if}
 </section>
+
+<style>
+    .message {
+        background-color: yellow;
+        padding: 10px;
+        border-radius: 3px;
+    }
+</style>

@@ -45,6 +45,7 @@
     .container {
         display: flex;
         gap: 10px;
+        flex-wrap: wrap;
     }
 
     section {
