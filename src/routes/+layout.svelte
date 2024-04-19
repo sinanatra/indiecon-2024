@@ -2,7 +2,6 @@
     <a href="/">Start</a> - 
     <a href="/entries">Entries in the Database</a> - 
     <a href="/print">Print</a>
-
 </nav>
 <slot />
 

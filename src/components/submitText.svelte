@@ -40,7 +40,7 @@
     {#if message}
         <div class="message">
             <p>{message}</p>
-            <a href="/" target="_self">Please Refresh the page</a>
+            <a href="/entries" target="_self">Check the archive</a>
         </div>
     {:else}
         <section>
