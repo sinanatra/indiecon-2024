@@ -83,12 +83,10 @@
         height: 200px;
         resize: none;
         max-width: 100%;
-        padding: 10px;
     }
 
     input {
         border: none;
-        padding: 10px;
         width: 100%;
         max-width: 100%;
         font-size: 16px;
