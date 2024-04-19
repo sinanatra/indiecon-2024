@@ -1,9 +1,10 @@
 <script>
+    import { question } from "$lib/stores/question.js";
     import SubmitText from "../components/submitText.svelte";
 </script>
 
 <article>
-    <h1>Will I ask a question here?</h1>
+    <h1>{$question}</h1>
     <SubmitText />
 </article>
 

@@ -1,4 +1,6 @@
 <script>
+    import { question } from "$lib/stores/question.js";
+
     let text = "";
     let emotion = "";
     let message = "";
@@ -18,7 +20,11 @@
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ answer: text, emotion: parseInt(emotion) }),
+            body: JSON.stringify({
+                question: $question,
+                answer: text,
+                emotion: parseInt(emotion),
+            }),
         });
 
         if (response.ok) {

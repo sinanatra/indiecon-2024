@@ -21,7 +21,7 @@
             {#each data as d}
                 <section>
                     <p>
-                        {d._id}
+                        {d.question}
                     </p>
                     <h2>
                         {d.answer}
