@@ -43,16 +43,23 @@
             <a href="/" target="_self">Please Refresh the page</a>
         </div>
     {:else}
-        <textarea name="answer" id="answer" bind:value={text}></textarea>
-        <input
-            type="number"
-            name="emotion"
-            id="emotion"
-            bind:value={emotion}
-            min="1"
-            max="5"
-        />
-        <button on:click={handleSubmit}>Submit</button>
+        <section>
+            <textarea
+                name="answer"
+                id="answer"
+                bind:value={text}
+                maxlength="640"
+            ></textarea>
+            <input
+                type="number"
+                name="emotion"
+                id="emotion"
+                bind:value={emotion}
+                min="1"
+                max="5"
+            />
+            <button on:click={handleSubmit}>Submit</button>
+        </section>
     {/if}
 </section>
 
@@ -61,5 +68,44 @@
         background-color: yellow;
         padding: 10px;
         border-radius: 3px;
+    }
+
+
+    section {
+        padding-top: 20px;
+        max-width: 640px;
+    }
+    textarea {
+        border: none;
+        background-color: white;
+        border-radius: 3px;
+        width: 100%;
+        height: 200px;
+        resize: none;
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    input {
+        border: none;
+        padding: 10px;
+        width: 100%;
+        max-width: 100%;
+        font-size: 16px;
+    }
+
+    button {
+        border: none;
+        background-color: white;
+        color: black;
+        margin-top: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background-color: blue;
+        color: white;
     }
 </style>

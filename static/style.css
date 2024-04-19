@@ -15,6 +15,18 @@ p {
     margin: 0;
 }
 
+
+a {
+    color: black;
+}
+
+input,
+button,
+textarea {
+    font-family: "Fk Raster", sans-serif;
+
+}
+
 @font-face {
     font-family: "Fk Raster";
     src: url("./fonts/FKRasterRomanCompactTrial-Smooth.otf") format("opentype");

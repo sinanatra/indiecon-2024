@@ -8,15 +8,14 @@
     };
 </script>
 
-<section>
+<article>
+    <h1>Write a Question to ask.</h1>
     <textarea name="question" id="question" bind:value={q}></textarea>
     <button on:click={handleSubmit}>Submit</button>
-</section>
+</article>
 
 <style>
-    .message {
-        background-color: yellow;
+    article {
         padding: 10px;
-        border-radius: 3px;
     }
 </style>
