@@ -47,7 +47,7 @@
                     <button on:click={() => printPoster(i)}>Print</button>
                     <section class="poster">
                         <div class="grid">
-                            {#each q.data.slice(0, 20) as d, index}
+                            {#each q.data.slice(0, 18) as d, index}
                                 {#if index === 6}
                                     <div class="item">
                                         <h1>{q.question}</h1>
@@ -57,9 +57,9 @@
                                         <p class="answer">
                                             {d.answer}
                                         </p>
-                                        <p>
-                                            {d.emotion}
-                                        </p>
+                                        <div class="emotion">
+                                            <!-- {d.emotion} -->
+                                        </div>
                                     </div>
                                 {/if}
                             {/each}
@@ -112,6 +112,7 @@
     }
 
     .item:nth-child(7) {
+        /* aspect-ratio: 1 / 1.2; */
         background: none;
         font-size: 25px;
         line-height: 25px;
@@ -129,7 +130,7 @@
 
     .item {
         break-inside: avoid;
-        aspect-ratio: 6 / 3;
+        aspect-ratio: 2;
         background: ghostwhite;
         padding: 1rem;
         border-radius: 0.75rem;
@@ -142,13 +143,20 @@
         overflow: hidden;
     }
 
-    .item:nth-child(3n) {
+    .emotion {
+        margin-top: 10px;
+        background-color: rgba(0, 0, 0, 0.141);
+        height: 80px;
+        border-radius: 3px;
+    }
+
+    /* .item:nth-child(3n) {
         aspect-ratio: 2;
     }
 
     .item:nth-child(3n - 1) {
         aspect-ratio: 2 / 3;
-    }
+    } */
 
     p {
         font-size: 12px;
