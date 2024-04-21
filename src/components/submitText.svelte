@@ -48,7 +48,7 @@
                 name="answer"
                 id="answer"
                 bind:value={text}
-                maxlength="640"
+                maxlength="320"
             ></textarea>
             <input
                 type="number"

@@ -11,25 +11,63 @@
 
     onMount(async () => {
         data = await fetchData();
+        data = data.reduce((acc, entry) => {
+            const { question, answer, emotion } = entry;
+            const groupIndex = acc.findIndex(
+                (group) => group.question === question,
+            );
+            if (groupIndex === -1) {
+                acc.push({ question, data: [{ answer, emotion }] });
+            } else {
+                acc[groupIndex].data.push({ answer, emotion });
+            }
+            return acc;
+        }, []);
+        console.log(data);
     });
+
+    function printPoster(question) {
+        const posterContent = document.querySelector(
+            `#poster-${question}`,
+        ).innerHTML;
+
+        document.body.innerHTML = posterContent;
+        const button =  document.querySelector("button"); // Find the button inside the poster
+        button.style.display = "none";
+
+        window.print();
+        // location.reload();
+    }
 </script>
 
 <article>
     <h1>These are the entries in the DB</h1>
     {#if data.length > 0}
         <article class="container">
-            {#each data as d}
-                <section>
-                    <p>
-                        {d.question}
-                    </p>
-                    <h2>
-                        {d.answer}
-                    </h2>
-                    <h1>
-                        {d.emotion}
-                    </h1>
-                </section>
+            {#each data as q, i}
+                <div id={`poster-${i}`}>
+                    <button on:click={() => printPoster(i)}>Print</button>
+                    <section class="poster">
+                        <div class="grid">
+                            {#each q.data.slice(0, 20) as d, index}
+                                {#if index === 6}
+                                    <div class="item">
+                                        <h1>{q.question}</h1>
+                                    </div>
+                                {:else}
+                                    <div class="item">
+                                        <p class="answer">
+                                            {d.answer}
+                                        </p>
+                                        <p>
+                                            {d.emotion}
+                                        </p>
+                                    </div>
+                                {/if}
+                            {/each}
+                        </div>
+                    </section>
+                </div>
             {/each}
         </article>
     {:else}
@@ -40,23 +78,79 @@
 <style>
     article {
         padding: 10px;
+        background-color: white;
+    }
+
+    button {
+        position: absolute;
+        margin-top: -30px;
     }
 
     .container {
-        display: flex;
+        overflow-x: scroll;
+        white-space: nowrap;
+        display: inline-flex;
         gap: 10px;
-        flex-wrap: wrap;
+        margin-top: 40px;
     }
 
-    section {
-        min-height: 150px;
-        max-width: 250px;
+    .poster {
+        display: inline-block;
         border-radius: 3px;
-        background-color: white;
+        height: 1198px;
+        width: 842px;
         padding: 10px;
+        white-space: wrap;
+        background-color: #cbffcb;
+    }
+
+    .item:nth-child(7) {
+        background: none;
+        font-size: 2.5vw;
+        line-height: 2.4vw;
+    }
+
+    .grid {
+        columns: 180px;
+        gap: 5px;
+        counter-reset: grid;
+    }
+
+    .item + .item {
+        margin-top: 5px;
+    }
+
+    .item {
+        break-inside: avoid;
+        aspect-ratio: 4 / 3;
+        background: ghostwhite;
+        padding: 1rem;
+        border-radius: 0.75rem;
+    }
+
+    .answer {
+        display: -webkit-box;
+        -webkit-line-clamp: 10;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .item:nth-child(3n) {
+        aspect-ratio: 1;
+    }
+
+    .item:nth-child(3n - 1) {
+        aspect-ratio: 2 / 3;
     }
 
     p {
         font-size: 12px;
+    }
+
+    @media print {
+        @page {
+            size: A4;
+            margin: 0;
+        }
     }
 </style>
