@@ -16,5 +16,6 @@
     h1 {
         font-size: 6vw;
         line-height: 6vw;
+        max-width: 1200px;
     }
 </style>

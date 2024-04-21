@@ -32,7 +32,7 @@
         ).innerHTML;
 
         document.body.innerHTML = posterContent;
-        const button =  document.querySelector("button"); // Find the button inside the poster
+        const button = document.querySelector("button"); // Find the button inside the poster
         button.style.display = "none";
 
         window.print();
@@ -49,7 +49,7 @@
                     <button on:click={() => printPoster(i)}>Print</button>
                     <section class="poster">
                         <div class="grid">
-                            {#each q.data.slice(0, 20) as d, index}
+                            {#each q.data.slice(0, 20).reverse() as d, index}
                                 {#if index === 6}
                                     <div class="item">
                                         <h1>{q.question}</h1>
@@ -104,10 +104,19 @@
         background-color: #cbffcb;
     }
 
+    .item:nth-child(1) {
+        background: none;
+    }
+
+    .item:nth-child(1) p {
+        font-size: 1rem;
+        line-height: 1rem;
+    }
+
     .item:nth-child(7) {
         background: none;
-        font-size: 2.5vw;
-        line-height: 2.4vw;
+        font-size: 25px;
+        line-height: 25px;
     }
 
     .grid {
@@ -151,6 +160,11 @@
         @page {
             size: A4;
             margin: 0;
+        }
+
+        h1 {
+            font-size: 25px;
+            line-height: 25px;
         }
     }
 </style>
