@@ -82,23 +82,23 @@
     }
 
     button {
-        position: absolute;
-        margin-top: -30px;
+        position: relative;
+        margin-bottom: 5px;
     }
 
     .container {
-        overflow-x: scroll;
-        white-space: nowrap;
-        display: inline-flex;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow: auto;
         gap: 10px;
         margin-top: 40px;
     }
 
     .poster {
-        display: inline-block;
         border-radius: 3px;
         height: 1198px;
         width: 842px;
+        flex: 0 0 842px;
         padding: 10px;
         white-space: wrap;
         background-color: #cbffcb;
