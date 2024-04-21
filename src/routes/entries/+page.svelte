@@ -36,7 +36,7 @@
         button.style.display = "none";
 
         window.print();
-        // location.reload();
+        location.reload();
     }
 </script>
 
