@@ -14,7 +14,8 @@
     }
 
     h1 {
-        font-size: 9vw;
-        line-height: 8vw;
+        font-size: 6vw;
+        line-height: 6vw;
+        max-width: 1200px;
     }
 </style>

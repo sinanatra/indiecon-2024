@@ -1,7 +1,14 @@
-import db from "$lib/db"
+import db from "$lib/db";
 
 export const GET = async ({ request, url }) => {
-    const res = await db.collection('indieData').find().toArray()
-    const data = await res
-    return new Response(JSON.stringify(data), { status: 200 })
-}
+    try {
+        const res = await db.collection('indieData')
+            .find()
+            .limit(100)
+            .toArray()
+
+        return new Response(JSON.stringify(res), { status: 200 });
+    } catch (error) {
+        return new Response(JSON.stringify({ message: error.message }), { status: 500 });
+    }
+};
