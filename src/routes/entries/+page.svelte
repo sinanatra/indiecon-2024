@@ -5,8 +5,7 @@
     async function fetchData() {
         const res = await fetch(`/api/get`);
         const json = await res.json();
-
-        return json;
+        return json.reverse();
     }
 
     onMount(async () => {
@@ -23,7 +22,6 @@
             }
             return acc;
         }, []);
-        console.log(data);
     });
 
     function printPoster(question) {
@@ -49,7 +47,7 @@
                     <button on:click={() => printPoster(i)}>Print</button>
                     <section class="poster">
                         <div class="grid">
-                            {#each q.data.slice(0, 20).reverse() as d, index}
+                            {#each q.data.slice(0, 20) as d, index}
                                 {#if index === 6}
                                     <div class="item">
                                         <h1>{q.question}</h1>
@@ -131,7 +129,7 @@
 
     .item {
         break-inside: avoid;
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 6 / 3;
         background: ghostwhite;
         padding: 1rem;
         border-radius: 0.75rem;
@@ -145,7 +143,7 @@
     }
 
     .item:nth-child(3n) {
-        aspect-ratio: 1;
+        aspect-ratio: 2;
     }
 
     .item:nth-child(3n - 1) {
