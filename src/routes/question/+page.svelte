@@ -4,7 +4,7 @@
     let q = "";
 
     const handleSubmit = async () => {
-        $question = q;
+        question.set(q);
     };
 </script>
 

@@ -1,3 +1,3 @@
-import { writable } from 'svelte/store';
+import { persisted } from 'svelte-persisted-store'
 
-export let question = writable('Should there be more printed books or more websites?');
+export const question = persisted('question', 'Should there be more printed books or more websites?')
