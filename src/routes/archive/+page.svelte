@@ -39,7 +39,6 @@
 </script>
 
 <article>
-    <h1>These are the entries in the DB</h1>
     {#if data.length > 0}
         <article class="container">
             {#each data as q, i}
@@ -89,7 +88,7 @@
         flex-wrap: nowrap;
         overflow: auto;
         gap: 10px;
-        margin-top: 40px;
+        /* margin-top: 40px; */
     }
 
     .poster {

@@ -1,6 +1,6 @@
 <nav>
-    <a href="/">Start</a> - 
-    <a href="/entries">Entries in the Database</a> - 
+    <a href="/">Start</a> -
+    <a href="/archive">Submissions</a>
 </nav>
 <slot />
 
@@ -12,8 +12,9 @@
         padding: 10px;
     }
 
-    a  {
-        color: black;text-decoration: underline dotted;
+    a {
+        color: black;
+        text-decoration: underline dotted;
         text-underline-offset: 3px;
     }
 </style>
