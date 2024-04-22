@@ -3,6 +3,7 @@
 
     let q = "";
     let color = "#cbffcb";
+    let message = "";
 
     const handleSubmit = async () => {
         // question.set(q);
@@ -20,18 +21,27 @@
             });
 
             return;
+        } else {
+            message = "Data submitted successfully";
         }
     };
 </script>
 
 <article>
-    <section>
-        <h1>Write a Question to ask.</h1>
-        <textarea name="question" id="question" bind:value={q}></textarea>
-        <h3>Choose a color</h3>
-        <input type="color" id="body" name="body" bind:value={color} />
-        <button on:click={handleSubmit}>Submit</button>
-    </section>
+    {#if message}
+        <div class="message">
+            <p>{message}</p>
+            <a href="/" target="_self">Go back to the home.</a>
+        </div>
+    {:else}
+        <section>
+            <h1>Write a Question to ask.</h1>
+            <textarea name="question" id="question" bind:value={q}></textarea>
+            <h3>Choose a color</h3>
+            <input type="color" id="body" name="body" bind:value={color} />
+            <button on:click={handleSubmit}>Submit</button>
+        </section>
+    {/if}
 </article>
 
 <style>
@@ -39,6 +49,12 @@
         padding: 10px;
         background-color: gainsboro;
         height: 100vh;
+    }
+
+    .message {
+        background-color: yellow;
+        padding: 10px;
+        border-radius: 3px;
     }
 
     section {
