@@ -1,10 +1,23 @@
 <script>
-    import { question } from "$lib/stores/question.js";
     import SubmitText from "../components/submitText.svelte";
+    import { onMount } from "svelte";
+
+    let data = [];
+
+    async function fetchData() {
+        const res = await fetch(`/api/question`);
+        const json = await res.json();
+        return json.reverse();
+    }
+
+    onMount(async () => {
+        data = await fetchData();
+        data = data[0].question;
+    });
 </script>
 
 <article>
-    <h1>{$question}</h1>
+    <h1>{data}</h1>
     <SubmitText />
 </article>
 

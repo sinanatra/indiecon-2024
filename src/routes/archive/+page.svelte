@@ -59,7 +59,7 @@
                             '#cbffcb'};"
                     >
                         <div class="grid">
-                            {#each q.data.slice(0, 18) as d, index}
+                            {#each q.data as d, index}
                                 {#if index === 6}
                                     <div class="item">
                                         <h1>{q.question}</h1>
