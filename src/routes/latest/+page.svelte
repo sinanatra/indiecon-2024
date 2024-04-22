@@ -1,8 +1,7 @@
 <script>
     import { onMount } from "svelte";
     let data = [];
-
-    const posterColors = ["#cbffcb", "#cbf0ff", "#ffcbf6", "#ffcbf6"];
+    let questions = [];
 
     async function fetchData() {
         const res = await fetch(`/api/get`);
@@ -10,7 +9,15 @@
         return json;
     }
 
+    async function fetchQuestions() {
+        const res = await fetch(`/api/question`);
+        const json = await res.json();
+        return json.reverse();
+    }
+
     onMount(async () => {
+        questions = await fetchQuestions();
+
         data = await fetchData();
         data = data.reduce((acc, entry) => {
             const { question, answer, emotion } = entry;
@@ -38,18 +45,23 @@
         window.print();
         location.reload();
     }
+
+    function getColor(question) {
+        const r = questions.find((d) => d.question == question);
+        return r.color;
+    }
 </script>
 
 <article>
-    <h2>Here are displayed the last few entries per poster.</h2>
-    {#if data.length > 0}
+    <!-- <h2>Here are displayed the last few entries per poster.</h2> -->
+    {#if data.length > 0 && questions.length > 0}
         <article class="container">
             {#each data as q, i}
                 <div id={`poster-${i}`}>
                     <button on:click={() => printPoster(i)}>Print</button>
                     <section
                         class="poster"
-                        style="background-color: {posterColors[i] ||
+                        style="background-color: {getColor(q.question) ||
                             '#cbffcb'};"
                     >
                         <div class="grid">

@@ -2,6 +2,7 @@
     import { question } from "$lib/stores/question.js";
 
     let q = "";
+    let color = "#cbffcb";
 
     const handleSubmit = async () => {
         // question.set(q);
@@ -10,7 +11,7 @@
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ question: q }),
+            body: JSON.stringify({ question: q, color }),
         });
         if (!response.ok) {
             console.error("Error writing question message", {
@@ -24,14 +25,24 @@
 </script>
 
 <article>
-    <h1>Write a Question to ask.</h1>
-    <textarea name="question" id="question" bind:value={q}></textarea>
-    <button on:click={handleSubmit}>Submit</button>
+    <section>
+        <h1>Write a Question to ask.</h1>
+        <textarea name="question" id="question" bind:value={q}></textarea>
+        <h3>Choose a color</h3>
+        <input type="color" id="body" name="body" bind:value={color} />
+        <button on:click={handleSubmit}>Submit</button>
+    </section>
 </article>
 
 <style>
     article {
         padding: 10px;
+        background-color: gainsboro;
+        height: 100vh;
+    }
+
+    section {
+        max-width: 900px;
     }
 
     textarea {
