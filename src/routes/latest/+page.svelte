@@ -5,7 +5,7 @@
     const posterColors = ["#cbffcb", "#cbf0ff", "#ffcbf6", "#ffcbf6"];
 
     async function fetchData() {
-        const res = await fetch(`/api/getAll`);
+        const res = await fetch(`/api/get`);
         const json = await res.json();
         return json.reverse();
     }
@@ -14,22 +14,16 @@
         data = await fetchData();
         data = data.reduce((acc, entry) => {
             const { question, answer, emotion } = entry;
-            const lastCluster = acc[acc.length - 1];
-
-            if (
-                !lastCluster ||
-                lastCluster.question !== question ||
-                lastCluster.data.length >= 20
-            ) {
+            const groupIndex = acc.findIndex(
+                (group) => group.question === question,
+            );
+            if (groupIndex === -1) {
                 acc.push({ question, data: [{ answer, emotion }] });
             } else {
-                lastCluster.data.push({ answer, emotion });
+                acc[groupIndex].data.push({ answer, emotion });
             }
-
             return acc;
         }, []);
-
-        console.log(data);
     });
 
     function printPoster(question) {
@@ -47,7 +41,7 @@
 </script>
 
 <article>
-    <h2>Here is displayed the entire collection of posters.</h2>
+    <h2>Here are displayed the last few entries per poster.</h2>
     {#if data.length > 0}
         <article class="container">
             {#each data as q, i}
