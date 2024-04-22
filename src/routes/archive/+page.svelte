@@ -2,6 +2,8 @@
     import { onMount } from "svelte";
     let data = [];
 
+    const posterColors = ["#cbffcb", "#cbf0ff", "#ffcbf6", "#ffcbf6"];
+
     async function fetchData() {
         const res = await fetch(`/api/get`);
         const json = await res.json();
@@ -44,7 +46,11 @@
             {#each data as q, i}
                 <div id={`poster-${i}`}>
                     <button on:click={() => printPoster(i)}>Print</button>
-                    <section class="poster">
+                    <section
+                        class="poster"
+                        style="background-color: {posterColors[i] ||
+                            '#cbffcb'};"
+                    >
                         <div class="grid">
                             {#each q.data.slice(0, 18) as d, index}
                                 {#if index === 6}
