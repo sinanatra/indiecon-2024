@@ -1,6 +1,7 @@
 <nav>
     <a href="/">Start</a> -
-    <a href="/archive">Submissions</a>
+    <a href="/latest">Latest Entries</a>-
+    <a href="/archive">Posters Archive</a>
 </nav>
 <slot />
 
