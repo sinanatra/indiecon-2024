@@ -4,7 +4,22 @@
     let q = "";
 
     const handleSubmit = async () => {
-        question.set(q);
+        // question.set(q);
+        const response = await fetch("/api/question", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ question: q }),
+        });
+        if (!response.ok) {
+            console.error("Error writing question message", {
+                status: response.status,
+                message: await response.text(),
+            });
+
+            return;
+        }
     };
 </script>
 
