@@ -7,7 +7,7 @@
     async function fetchData() {
         const res = await fetch(`/api/get`);
         const json = await res.json();
-        return json.reverse();
+        return json;
     }
 
     onMount(async () => {
