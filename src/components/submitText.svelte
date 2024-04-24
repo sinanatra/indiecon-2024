@@ -15,7 +15,7 @@
             return;
         }
 
-        const response = await fetch("/api/question", {
+        const response = await fetch("/api/post", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
