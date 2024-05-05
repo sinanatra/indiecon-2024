@@ -1,21 +1,24 @@
 <script>
+    import MultiSelect from "svelte-multiselect";
     import { question } from "$lib/stores/question.js";
 
     let text = "";
-    let emotion = "";
     let message = "";
+    export let tags;
+    export let id;
+    let selectedTags;
 
     const handleSubmit = async () => {
         if (!text.trim()) {
             alert("Text field cannot be empty");
             return;
         }
-        if (emotion < 1 || emotion > 5) {
-            alert("Emotion must be between 1 and 5");
+        if (selectedTags.length < 2) {
+            alert("Tags should be at least 2");
             return;
         }
 
-        const response = await fetch("/api/post", {
+        const postRequest = await fetch("/api/post", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -23,15 +26,29 @@
             body: JSON.stringify({
                 question: $question,
                 answer: text,
-                emotion: parseInt(emotion),
+                tags: selectedTags,
             }),
         });
 
-        if (response.ok) {
-            console.log("Data submitted successfully");
-            message = "Data submitted successfully";
+        console.log({ id, tags: selectedTags });
+        const patchRequest = await fetch("/api/question", {
+            method: "PATCH", 
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                id,
+                tags: selectedTags,
+            }),
+        });
+
+        const responses = await Promise.all([postRequest, patchRequest]);
+        const success = responses.every((response) => response.ok);
+
+        if (success) {
+            console.log("Data submitted successfully.");
+            message = "Data submitted successfully.";
         } else {
-            console.error("Error submitting data");
+            console.error("Failed to submit data.");
+            message = "Failed to submit data.";
         }
     };
 </script>
@@ -49,15 +66,18 @@
                 id="answer"
                 bind:value={text}
                 maxlength="320"
+                required
             ></textarea>
-            <input
-                type="number"
-                name="emotion"
-                id="emotion"
-                bind:value={emotion}
-                min="1"
-                max="5"
-            />
+
+            <MultiSelect
+                id="tag-select"
+                options={tags}
+                bind:value={selectedTags}
+                placeholder="Select 3 tags or add new ones.."
+                allowUserOptions="append"
+                required
+            ></MultiSelect>
+
             <button on:click={handleSubmit}>Submit</button>
         </section>
     {/if}
@@ -70,12 +90,18 @@
         border-radius: 3px;
     }
 
+    :global(div.multiselect) {
+        background: white !important;
+        border: none !important;
+        border-radius: 3px !important;
+        width: 100%;
+    }
 
     section {
         padding-top: 20px;
         max-width: 640px;
     }
-    
+
     textarea {
         border: none;
         background-color: white;
