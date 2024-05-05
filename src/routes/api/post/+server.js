@@ -4,7 +4,7 @@ export const POST = async ({ request }) => {
     try {
         const data = await request.json();
 
-        if (data.question && data.answer && data.emotion >= 1 && data.emotion <= 5) {
+        if (data.question && data.answer) {
             const collection = await db.collection('indieData');
             await collection.insertOne(data);
             return new Response(JSON.stringify(data), { status: 200 });
