@@ -68,7 +68,7 @@
         background: none;
     }
 
-    .item:nth-child(1) p {
+    .item:nth-child(1) .answer {
         font-size: 1rem;
         line-height: 1rem;
     }
@@ -107,14 +107,27 @@
 
     .tags {
         margin-top: 10px;
+    }
+
+    .tags p{
+        display: inline-block;
+        background-color: aliceblue;
+        margin: 0 2px;
+        padding: 2px;
         border-radius: 3px;
+        font-size: 8px;
+        text-transform: uppercase;
     }
 
     button {
         position: relative;
         margin-bottom: 5px;
     }
-    
+
+    p {
+        font-size: 12px;
+    }
+
     @media print {
         @page {
             size: A4;
