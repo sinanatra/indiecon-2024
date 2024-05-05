@@ -3,7 +3,7 @@
     import { onMount } from "svelte";
 
     let data = [];
-
+    let tags = [];
     async function fetchData() {
         const res = await fetch(`/api/question`);
         const json = await res.json();
@@ -12,13 +12,16 @@
 
     onMount(async () => {
         data = await fetchData();
-        data = data[0].question;
+        data = data[0];
     });
 </script>
 
 <article>
-    <h1>{data}</h1>
-    <SubmitText />
+    <h1>{data.question}</h1>
+    <SubmitText
+        tags={data?.tags ? data.tags.sort() : ["happy", "okay", "sad"]}
+        id={data._id}
+    />
 </article>
 
 <style>
