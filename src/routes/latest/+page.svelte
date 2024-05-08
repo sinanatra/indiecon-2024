@@ -33,24 +33,6 @@
             return acc;
         }, []);
     });
-
-    function printPoster(question) {
-        const posterContent = document.querySelector(
-            `#poster-${question}`,
-        ).innerHTML;
-
-        document.body.innerHTML = posterContent;
-        const button = document.querySelector("button"); // Find the button inside the poster
-        button.style.display = "none";
-
-        window.print();
-        location.reload();
-    }
-
-    function getColor(question) {
-        const r = questions.find((d) => d.question == question);
-        return r.color;
-    }
 </script>
 
 <article>

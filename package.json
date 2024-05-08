@@ -16,6 +16,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"d3": "^7.9.0",
 		"mongodb": "^6.5.0",
 		"svelte-local-storage-store": "^0.6.4",
 		"svelte-multiselect": "^10.3.0",
