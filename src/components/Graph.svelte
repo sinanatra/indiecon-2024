@@ -35,7 +35,7 @@
                     .id((d) => d.id)
                     .distance(600),
             )
-            .force("charge", d3.forceManyBody().strength(-500))
+            .force("charge", d3.forceManyBody().strength(-50))
             .force("center", d3.forceCenter(width / 2, height / 2));
 
         const svg = d3
