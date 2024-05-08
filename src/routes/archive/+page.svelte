@@ -21,7 +21,7 @@
 
         data = await fetchData();
         data = data.reduce((acc, entry) => {
-            const { question, answer, emotion } = entry;
+            const { question, answer, tags } = entry;
             const lastCluster = acc[acc.length - 1];
 
             if (
@@ -29,9 +29,9 @@
                 lastCluster.question !== question ||
                 lastCluster.data.length >= 20
             ) {
-                acc.push({ question, data: [{ answer, emotion }] });
+                acc.push({ question, data: [{ answer, tags }] });
             } else {
-                lastCluster.data.push({ answer, emotion });
+                lastCluster.data.push({ answer, tags });
             }
 
             return acc;

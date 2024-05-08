@@ -1,4 +1,6 @@
 <script>
+    import Graph from "@components/Graph.svelte";
+
     export let questions;
     export let q;
     export let i;
@@ -51,6 +53,9 @@
             {/each}
         </div>
     </section>
+    <section class="poster">
+        <Graph {q}/>
+    </section>
 </div>
 
 <style>
@@ -62,6 +67,7 @@
         padding: 10px;
         white-space: wrap;
         background-color: #cbffcb;
+        margin-bottom: 10px;
     }
 
     .item:nth-child(1) {
@@ -106,17 +112,17 @@
     }
 
     .tags {
-        margin-top: 10px;
+        /* margin-top: 10px; */
+        line-height: .8;
     }
 
-    .tags p{
+    .tags p {
+        font-style: italic;
         display: inline-block;
-        background-color: aliceblue;
-        margin: 0 2px;
+        background-color: white;
+        margin-right: 5px;
         padding: 2px;
         border-radius: 3px;
-        font-size: 8px;
-        text-transform: uppercase;
     }
 
     button {
