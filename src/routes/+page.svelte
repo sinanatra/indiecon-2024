@@ -17,11 +17,13 @@
 </script>
 
 <article>
-    <h1>{data.question}</h1>
-    <SubmitText
-        tags={data?.tags ? data.tags.sort() : ["happy", "okay", "sad"]}
-        id={data._id}
-    />
+    {#if data.question}
+        <h1>{data.question}</h1>
+        <SubmitText
+            tags={data?.tags ? data.tags.sort() : ["happy", "okay", "sad"]}
+            id={data._id}
+        />
+    {/if}
 </article>
 
 <style>
