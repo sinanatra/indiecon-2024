@@ -30,12 +30,11 @@
             }),
         });
 
-        console.log({ id, tags: selectedTags });
         const patchRequest = await fetch("/api/question", {
-            method: "PATCH", 
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                id,
+                id: id,
                 tags: selectedTags,
             }),
         });

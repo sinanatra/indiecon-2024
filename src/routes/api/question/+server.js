@@ -5,7 +5,7 @@ export const GET = async ({ request, url }) => {
     try {
         const res = await db.collection('question')
             .find()
-            .limit(10)
+            .limit(20)
             .toArray()
 
         return new Response(JSON.stringify(res), { status: 200 });
@@ -48,7 +48,9 @@ export const PATCH = async ({ request }) => {
         const result = await collection.updateOne(
             { _id: new ObjectId(data.id) }, // Convert string ID to ObjectId
             { $addToSet: { tags: { $each: data.tags } } } // Use $each with $addToSet to handle array of tags
+
         );
+
 
         if (result.modifiedCount === 0) {
             return new Response(JSON.stringify({ message: "No changes made or document not found" }), { status: 204 });

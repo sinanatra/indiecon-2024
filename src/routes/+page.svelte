@@ -1,6 +1,7 @@
 <script>
     import SubmitText from "../components/submitText.svelte";
     import { onMount } from "svelte";
+    import { question } from "$lib/stores/question.js";
 
     let data = [];
     let tags = [];
@@ -13,6 +14,7 @@
     onMount(async () => {
         data = await fetchData();
         data = data[0];
+        $question = data.question;
     });
 </script>
 

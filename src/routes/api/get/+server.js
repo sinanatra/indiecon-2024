@@ -5,7 +5,7 @@ export const GET = async ({ request, url }) => {
         const res = await db.collection('indieData')
             .find()
             .sort({ _id: -1 })
-            .limit(60)
+            .limit(600)
             .toArray()
 
         return new Response(JSON.stringify(res), { status: 200 });
