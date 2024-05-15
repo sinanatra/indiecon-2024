@@ -36,6 +36,7 @@
 
             return acc;
         }, []);
+        console.log(data);
     });
 </script>
 
