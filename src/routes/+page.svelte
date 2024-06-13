@@ -5,18 +5,37 @@
     import { cartridge } from "$lib/stores/cartridge.js";
 
     let data = [];
-    let tags = [];
+    let questions = [];
+
     async function fetchData() {
         const res = await fetch(`/api/question`);
         const json = await res.json();
         return json.reverse();
     }
 
+    async function fetchAll() {
+        const res = await fetch(`/api/getAll`);
+        const json = await res.json();
+        return json.reverse();
+    }
+
     onMount(async () => {
+        questions = await fetchAll();
         data = await fetchData();
         data = data[0];
         $question = data.question;
-        // $cartridge = data.cartridge;
+
+        let remainingChar = questions
+            .filter((d) => d.question == $question)
+            .map((d) => d.answer.length)
+            .reduce(
+                (accumulator, currentValue) => accumulator + currentValue,
+                0,
+            );
+        $cartridge =
+            data.cartridge - remainingChar > 0
+                ? data.cartridge - remainingChar
+                : 0;
     });
 </script>
 
@@ -36,9 +55,6 @@
 <style>
     article {
         padding: 10px;
-        background-color: rgb(225, 255, 253);
-        /* width: 100vw; */
-        height: 100vh;
     }
 
     div {

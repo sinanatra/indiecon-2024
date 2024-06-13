@@ -46,7 +46,6 @@
         if (success) {
             console.log("Data submitted successfully.");
             message = "Data submitted successfully.";
-            $cartridge = $cartridge - text.replace(" ", "").length;
         } else {
             console.error("Failed to submit data.");
             message = "Failed to submit data.";
@@ -66,7 +65,7 @@
                 name="answer"
                 id="answer"
                 bind:value={text}
-                maxlength="500"
+                maxlength="400"
                 required
             ></textarea>
 
@@ -104,13 +103,14 @@
     }
 
     textarea {
-        border: none;
-        background-color: white;
+        border: 1px dashed;
+        background-color: rgb(246, 255, 254);
         border-radius: 3px;
         width: 100%;
-        height: 200px;
+        height: 150px;
         resize: none;
         max-width: 100%;
+        font-size: 18px;
     }
 
     input {
@@ -122,7 +122,7 @@
 
     button {
         border: none;
-        background-color: white;
+        background-color: rgb(230, 255, 252);
         color: black;
         margin-top: 5px;
         cursor: pointer;

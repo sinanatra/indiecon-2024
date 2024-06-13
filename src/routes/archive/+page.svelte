@@ -24,11 +24,7 @@
             const { question, answer, tags } = entry;
             const lastCluster = acc[acc.length - 1];
 
-            if (
-                !lastCluster ||
-                lastCluster.question !== question ||
-                lastCluster.data.length >= 20
-            ) {
+            if (!lastCluster || lastCluster.question !== question) {
                 acc.push({ question, data: [{ answer, tags }] });
             } else {
                 lastCluster.data.push({ answer, tags });
@@ -36,12 +32,10 @@
 
             return acc;
         }, []);
-        console.log(data);
     });
 </script>
 
 <article>
-    <!-- <h2>Here is displayed the entire collection of posters.</h2> -->
     {#if data.length > 0}
         <article class="container">
             {#each data as q, i}
