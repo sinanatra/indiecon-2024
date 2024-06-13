@@ -2,6 +2,7 @@
     import SubmitText from "../components/submitText.svelte";
     import { onMount } from "svelte";
     import { question } from "$lib/stores/question.js";
+    import { cartridge } from "$lib/stores/cartridge.js";
 
     let data = [];
     let tags = [];
@@ -15,27 +16,32 @@
         data = await fetchData();
         data = data[0];
         $question = data.question;
+        // $cartridge = data.cartridge;
     });
 </script>
 
 <article>
     {#if data.question}
-        <h1>{data.question}</h1>
-        <SubmitText
-            tags={data?.tags ? data.tags.sort() : ["happy", "okay", "sad"]}
-            id={data._id}
-        />
+        <div>
+            {$cartridge} characters left
+            <h1>{data.question}</h1>
+            <SubmitText
+                tags={data?.tags ? data.tags.sort() : ["happy", "okay", "sad"]}
+                id={data._id}
+            />
+        </div>
     {/if}
 </article>
 
 <style>
     article {
         padding: 10px;
+        background-color: rgb(225, 255, 253);
+        /* width: 100vw; */
+        height: 100vh;
     }
 
-    h1 {
-        font-size: 6vw;
-        line-height: 6vw;
-        max-width: 1200px;
+    div {
+        max-width: 680px;
     }
 </style>

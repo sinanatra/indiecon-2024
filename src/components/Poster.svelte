@@ -54,7 +54,7 @@
         </div>
     </section>
     <section class="poster">
-        <Graph {q}/>
+        <!-- <Graph {q}/> -->
     </section>
 </div>
 
@@ -66,7 +66,7 @@
         flex: 0 0 842px;
         padding: 10px;
         white-space: wrap;
-        background-color: #cbffcb;
+        background-color: rgb(239, 239, 239);
         margin-bottom: 10px;
     }
 

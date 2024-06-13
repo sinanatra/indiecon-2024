@@ -36,9 +36,9 @@ export const PATCH = async ({ request }) => {
     try {
         const data = await request.json();
 
-        if (!data.tags || data.tags.length === 0) {
-            return new Response(JSON.stringify({ error: "No tags provided" }), { status: 400 });
-        }
+        // if (!data.tags || data.tags.length === 0) {
+        //     return new Response(JSON.stringify({ error: "No tags provided" }), { status: 400 });
+        // }
 
         if (!data.id) {
             return new Response(JSON.stringify({ error: "No ID provided" }), { status: 400 });
@@ -47,7 +47,7 @@ export const PATCH = async ({ request }) => {
         const collection = await db.collection('question');
         const result = await collection.updateOne(
             { _id: new ObjectId(data.id) }, // Convert string ID to ObjectId
-            { $addToSet: { tags: { $each: data.tags } } } // Use $each with $addToSet to handle array of tags
+            // { $addToSet: { tags: { $each: data.tags } } } // Use $each with $addToSet to handle array of tags
 
         );
 
@@ -62,3 +62,4 @@ export const PATCH = async ({ request }) => {
         return new Response(JSON.stringify({ error: "Internal server error" }), { status: 500 });
     }
 };
+
