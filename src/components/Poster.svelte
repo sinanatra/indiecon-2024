@@ -143,6 +143,7 @@
 
     .empty {
         color: rgb(200, 200, 200);
+        color: blueviolet;
         /* opacity: 0.4; */
     }
 
