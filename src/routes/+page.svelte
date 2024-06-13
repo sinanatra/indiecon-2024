@@ -60,30 +60,36 @@
 
 <article>
     {#if datum.question}
-        <div>
-            {$cartridge} characters left
-            <h1>{datum.question}</h1>
-            <SubmitText
-                tags={data?.tags ? data.tags.sort() : ["happy", "okay", "sad"]}
-                id={data._id}
-            />
-        </div>
-        <div>
-            {#each posters as q, i}
-                <Poster {q} {i} questions={data} />
-            {/each}
-        </div>
+        {$cartridge} characters left
+        <h1>{datum.question}</h1>
+        <section>
+            <div>
+                <SubmitText
+                    tags={data?.tags
+                        ? data.tags.sort()
+                        : ["happy", "okay", "sad"]}
+                    id={data._id}
+                />
+            </div>
+            <div>
+                {#each posters as q, i}
+                    <Poster {q} {i} questions={data} />
+                {/each}
+            </div>
+        </section>
     {/if}
 </article>
 
 <style>
     article {
         padding: 10px;
+    }
+    section {
         display: flex;
         gap: 20px;
     }
 
     div {
-        min-width: 40vw;
+        min-width: 30vw;
     }
 </style>

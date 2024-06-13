@@ -154,7 +154,7 @@
 
     button {
         position: relative;
-        margin-bottom: 5px;
+        margin-bottom: 20px;
     }
 
     h1 {
