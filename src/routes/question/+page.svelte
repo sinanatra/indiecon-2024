@@ -3,6 +3,7 @@
 
     let q = "";
     let color = "#cbffcb";
+    let cartridge = 8000;
     let message = "";
 
     const handleSubmit = async () => {
@@ -12,7 +13,7 @@
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ question: q, color }),
+            body: JSON.stringify({ question: q, color, cartridge }),
         });
         if (!response.ok) {
             console.error("Error writing question message", {
@@ -38,7 +39,14 @@
             <h1>Write a Question to ask.</h1>
             <textarea name="question" id="question" bind:value={q}></textarea>
             <h3>Choose a color</h3>
-            <input type="color" id="body" name="body" bind:value={color} />
+            <input type="color" id="color" name="color" bind:value={color} />
+            <h3>Cartridge</h3>
+            <input
+                type="number"
+                id="number"
+                name="number"
+                bind:value={cartridge}
+            />
             <button on:click={handleSubmit}>Submit</button>
         </section>
     {/if}

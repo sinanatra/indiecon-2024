@@ -7,6 +7,8 @@ export const POST = async ({ request }) => {
         if (data.question && data.answer) {
             const collection = await db.collection('indieData');
             await collection.insertOne(data);
+
+
             return new Response(JSON.stringify(data), { status: 200 });
         } else {
             return new Response(JSON.stringify({ error: "Invalid data" }), { status: 422 });

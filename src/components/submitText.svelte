@@ -1,6 +1,7 @@
 <script>
     import MultiSelect from "svelte-multiselect";
     import { question } from "$lib/stores/question.js";
+    import { cartridge } from "$lib/stores/cartridge.js";
 
     let text = "";
     let message = "";
@@ -13,10 +14,10 @@
             alert("Text field cannot be empty");
             return;
         }
-        if (selectedTags.length < 2) {
-            alert("Tags should be at least 2");
-            return;
-        }
+        // if (selectedTags.length < 2) {
+        //     alert("Tags should be at least 2");
+        //     return;
+        // }
 
         const postRequest = await fetch("/api/post", {
             method: "POST",
@@ -26,25 +27,26 @@
             body: JSON.stringify({
                 question: $question,
                 answer: text,
-                tags: selectedTags,
+                // tags: selectedTags,
             }),
         });
 
-        const patchRequest = await fetch("/api/question", {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                id: id,
-                tags: selectedTags,
-            }),
-        });
+        // const patchRequest = await fetch("/api/question", {
+        //     method: "PATCH",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify({
+        //         id: id,
+        //         // tags: selectedTags,
+        //     }),
+        // });
 
-        const responses = await Promise.all([postRequest, patchRequest]);
+        const responses = await Promise.all([postRequest]);
         const success = responses.every((response) => response.ok);
 
         if (success) {
             console.log("Data submitted successfully.");
             message = "Data submitted successfully.";
+            $cartridge = $cartridge - text.replace(" ", "").length;
         } else {
             console.error("Failed to submit data.");
             message = "Failed to submit data.";
@@ -64,18 +66,18 @@
                 name="answer"
                 id="answer"
                 bind:value={text}
-                maxlength="320"
+                maxlength="500"
                 required
             ></textarea>
 
-            <MultiSelect
+            <!-- <MultiSelect
                 id="tag-select"
                 options={tags}
                 bind:value={selectedTags}
                 placeholder="Select 3 tags or add new ones.."
                 allowUserOptions="append"
                 required
-            ></MultiSelect>
+            ></MultiSelect> -->
 
             <button on:click={handleSubmit}>Submit</button>
         </section>

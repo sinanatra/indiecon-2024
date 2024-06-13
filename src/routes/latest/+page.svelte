@@ -40,7 +40,12 @@
     {#if data.length > 0 && questions.length > 0}
         <article class="container">
             {#each data as q, i}
-                <Poster {q} {i} {questions} />
+                {#each q.data as q, l}
+                    <div>
+                        {q.answer}
+                    </div>
+                    <!-- <Poster {q} {i} {questions} /> -->
+                {/each}
             {/each}
         </article>
     {:else}
@@ -65,5 +70,11 @@
         overflow: auto;
         gap: 10px;
         /* margin-top: 40px; */
+    }
+
+    div {
+        min-width: 320px;
+        height: 420px;
+        background-color: gainsboro;
     }
 </style>
