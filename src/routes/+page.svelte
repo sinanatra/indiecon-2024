@@ -3,10 +3,11 @@
     import { onMount } from "svelte";
     import { question } from "$lib/stores/question.js";
     import { cartridge } from "$lib/stores/cartridge.js";
-
+    import Poster from "@components/Poster.svelte";
     let data = [];
     let questions = [];
-
+    let posters = [];
+    let datum = "";
     async function fetchData() {
         const res = await fetch(`/api/question`);
         const json = await res.json();
@@ -22,8 +23,24 @@
     onMount(async () => {
         questions = await fetchAll();
         data = await fetchData();
-        data = data[0];
-        $question = data.question;
+
+        posters = questions
+            .filter((d) => d.question == data[0].question)
+            .reduce((acc, entry) => {
+                const { question, answer, tags } = entry;
+                const lastCluster = acc[acc.length - 1];
+
+                if (!lastCluster || lastCluster.question !== question) {
+                    acc.push({ question, data: [{ answer, tags }] });
+                } else {
+                    lastCluster.data.push({ answer, tags });
+                }
+
+                return acc;
+            }, []);
+
+        datum = data[0];
+        $question = datum.question;
 
         let remainingChar = questions
             .filter((d) => d.question == $question)
@@ -33,21 +50,28 @@
                 0,
             );
         $cartridge =
-            data.cartridge - remainingChar > 0
-                ? data.cartridge - remainingChar
+            datum.cartridge - remainingChar > 0
+                ? datum.cartridge - remainingChar
                 : 0;
+
+        console.log(posters);
     });
 </script>
 
 <article>
-    {#if data.question}
+    {#if datum.question}
         <div>
             {$cartridge} characters left
-            <h1>{data.question}</h1>
+            <h1>{datum.question}</h1>
             <SubmitText
                 tags={data?.tags ? data.tags.sort() : ["happy", "okay", "sad"]}
                 id={data._id}
             />
+        </div>
+        <div>
+            {#each posters as q, i}
+                <Poster {q} {i} questions={data} />
+            {/each}
         </div>
     {/if}
 </article>
@@ -55,9 +79,11 @@
 <style>
     article {
         padding: 10px;
+        display: flex;
+        gap: 20px;
     }
 
     div {
-        max-width: 680px;
+        min-width: 40vw;
     }
 </style>

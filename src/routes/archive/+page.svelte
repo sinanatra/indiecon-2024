@@ -1,6 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import Poster from "@components/Poster.svelte";
+    
     let data = [];
     let questions = [];
 

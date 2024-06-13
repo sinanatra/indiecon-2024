@@ -28,6 +28,11 @@
         return r?.cartridge;
     }
 
+    function getColor(question) {
+        const r = questions.find((d) => d.question == question);
+        return r?.color;
+    }
+
     const characters = q.data
         .map((d) => d.answer.length + 1) // Include the ". " after each answer
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -81,8 +86,8 @@
 
         combinedArray = combinedArray.map((item, index) => {
             if (item.type === "empty") {
-                const x = index % 99;
-                const y = Math.floor(index / 99);
+                const x = index % 107;
+                const y = Math.floor(index / 107);
                 item.content = getNoiseCharacter(x, y, t);
             }
             return item;
@@ -114,7 +119,7 @@
                 {#if item.type === "text"}
                     <span class="text">{item.content}</span>
                 {:else}
-                    <span class="empty">{item.content}</span>
+                    <span class="empty" style="color:{getColor(q.question)}">{item.content}</span>
                 {/if}
             {/each}
         </div>
@@ -131,8 +136,8 @@
         white-space: wrap;
         border: 1px dashed;
         margin-bottom: 10px;
-        font-size: 14px;
-        line-height: 14px;
+        font-size: 13px;
+        line-height: 13px;
         font-family: monospace;
     }
 
