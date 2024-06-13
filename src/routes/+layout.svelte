@@ -1,7 +1,7 @@
 <nav>
     <a href="/">Start</a> —
-    <a href="/latest">Latest Entries</a>—
-    <a href="/archive">Posters Archive</a>
+    <!-- <a href="/latest">Entries</a> — -->
+    <a href="/archive">Archive</a>
 </nav>
 <slot />
 

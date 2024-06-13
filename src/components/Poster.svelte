@@ -1,5 +1,5 @@
 <script>
-    import Graph from "@components/Graph.svelte";
+    import { onMount } from "svelte";
 
     export let questions;
     export let q;
@@ -18,43 +18,54 @@
         location.reload();
     }
 
-    function getColor(question) {
+    function getCartridge(question) {
         const r = questions.find((d) => d.question == question);
-        return r.color;
+        return r?.cartridge;
     }
+
+    const characters = q.data
+        .map((d) => d.answer.length + 1) // Include the ". " after each answer
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+    const loremChar =
+        Number(getCartridge(q.question)) - characters > 0
+            ? Number(getCartridge(q.question)) - characters
+            : 0;
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    let combinedArray = [];
+
+    onMount(() => {
+        combinedArray = [
+            ...q.data.map((d) => ({ type: "text", content: `${d.answer}・` })),
+            ...Array(loremChar).fill({ type: "empty", content: "" }),
+        ];
+
+        shuffleArray(combinedArray);
+    });
 </script>
 
 <div id={`poster-${i}`}>
     <button on:click={() => printPoster(i)}>Print</button>
-    <section
-        class="poster"
-        style="background-color: {getColor(q.question) || '#cbffcb'};"
-    >
-        <div class="grid">
-            {#each q.data as d, index}
-                {#if index === 6}
-                    <div class="item">
-                        <h1>{q.question}</h1>
-                    </div>
+    <section class="poster">
+        <p>{getCartridge(q.question)} characters for a collective poster.</p>
+        <h1>{q.question}</h1>
+
+        <div class="results">
+            {#each combinedArray as item}
+                {#if item.type === "text"}
+                    <span class="text">{item.content}</span>
                 {:else}
-                    <div class="item">
-                        <p class="answer">
-                            {d.answer}
-                        </p>
-                        <div class="tags">
-                            {#if d.tags}
-                                {#each d.tags as tag}
-                                    <p>{tag}</p>
-                                {/each}
-                            {/if}
-                        </div>
-                    </div>
+                    <span class="empty"></span>
                 {/if}
             {/each}
         </div>
-    </section>
-    <section class="poster">
-        <!-- <Graph {q}/> -->
     </section>
 </div>
 
@@ -66,72 +77,30 @@
         flex: 0 0 842px;
         padding: 10px;
         white-space: wrap;
-        background-color: rgb(239, 239, 239);
+        border: 1px dashed;
         margin-bottom: 10px;
+        font-size: 14px;
+        line-height: 14px;
+        font-family: monospace;
+    }
+    .results {
+        margin-top: 20px;
+        word-break: break-all;
     }
 
-    .item:nth-child(1) {
-        background: none;
+    .results span:first-of-type::before {
+        content: "";
+        padding-right: 0;
     }
 
-    .item:nth-child(1) .answer {
-        font-size: 1rem;
-        line-height: 1rem;
-    }
-
-    .item:nth-child(7) {
-        /* aspect-ratio: 1 / 1.2; */
-        background: none;
-        font-size: 25px;
-        line-height: 25px;
-    }
-
-    .grid {
-        columns: 180px;
-        gap: 5px;
-        counter-reset: grid;
-    }
-
-    .item + .item {
-        margin-top: 5px;
-    }
-
-    .item {
-        break-inside: avoid;
-        aspect-ratio: 2;
-        background: ghostwhite;
-        padding: 1rem;
-        border-radius: 0.75rem;
-    }
-
-    .answer {
-        display: -webkit-box;
-        -webkit-line-clamp: 10;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .tags {
-        /* margin-top: 10px; */
-        line-height: .8;
-    }
-
-    .tags p {
-        font-style: italic;
-        display: inline-block;
-        background-color: white;
-        margin-right: 5px;
-        padding: 2px;
-        border-radius: 3px;
+    .empty::before {
+        content: "+";
+        opacity: 0.2;
     }
 
     button {
         position: relative;
         margin-bottom: 5px;
-    }
-
-    p {
-        font-size: 12px;
     }
 
     @media print {

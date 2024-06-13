@@ -67,14 +67,16 @@
     .container {
         display: flex;
         flex-wrap: nowrap;
+        flex-wrap: wrap;
         overflow: auto;
         gap: 10px;
         /* margin-top: 40px; */
     }
 
     div {
-        min-width: 320px;
-        height: 420px;
-        background-color: gainsboro;
+        width: 320px;
+        height: fit-content;
+        background-color: rgb(246, 255, 254);
+        padding: 5px;
     }
 </style>
