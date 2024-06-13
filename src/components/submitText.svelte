@@ -57,7 +57,7 @@
     {#if message}
         <div class="message">
             <p>{message}</p>
-            <a href="/latest" target="_self">Check the latest entries.</a>
+            <a href="/" target="_self">Check the latest entries.</a>
         </div>
     {:else}
         <section>
@@ -104,7 +104,7 @@
 
     textarea {
         border: 1px dashed;
-        background-color: rgb(246, 255, 254);
+        background-color: rgb(248, 248, 248);
         border-radius: 3px;
         width: 100%;
         height: 150px;
@@ -122,7 +122,7 @@
 
     button {
         border: none;
-        background-color: rgb(230, 255, 252);
+        background-color: rgb(248, 248, 248);
         color: black;
         margin-top: 5px;
         cursor: pointer;

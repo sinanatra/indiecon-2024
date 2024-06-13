@@ -86,8 +86,8 @@
 
         combinedArray = combinedArray.map((item, index) => {
             if (item.type === "empty") {
-                const x = index % 139;
-                const y = Math.floor(index / 139);
+                const x = index % 107;
+                const y = Math.floor(index / 107);
                 item.content = getNoiseCharacter(x, y, t);
             }
             return item;
@@ -136,8 +136,8 @@
         white-space: wrap;
         border: 1px dashed;
         margin-bottom: 10px;
-        font-size: 10px;
-        line-height: 14px;
+        font-size: 13px;
+        line-height: 13px;
         font-family: monospace;
     }
 
