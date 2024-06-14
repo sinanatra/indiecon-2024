@@ -152,6 +152,7 @@
         margin-top: 10px;
         word-break: break-all;
         align-items: center;
+        user-select: none;
     }
 
     .metadata {
@@ -161,8 +162,8 @@
 
     .text {
         color: rgb(31, 31, 31);
-        /* color: var(--theme-color); */
-        /* opacity: 0.5; */
+        color: var(--theme-color);
+        /* opacity: 0.8; */
     }
 
     .text:after {
@@ -171,7 +172,6 @@
     }
     .empty {
         color: rgb(200, 200, 200);
-        user-select: none;
     }
 
     button {
