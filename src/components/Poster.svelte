@@ -52,7 +52,7 @@
         }
     }
 
-    const scale = Math.random() * (0.5 - 0.1) + 0.1;
+    const scale = Math.random() * (0.9 - 0.1) + 0.1;
     const s = Math.random() * (0.09 - 0.01) + 0.01;
 
     function getNoiseCharacter(x, y, t) {
