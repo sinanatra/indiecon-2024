@@ -52,7 +52,7 @@
 <article>
     {#if history.length > 0}
         <article class="container">
-            {#each history as q, i}
+            {#each history.reverse() as q, i}
                 <Poster {q} {i} {questions} submitted={true} />
             {/each}
         </article>
