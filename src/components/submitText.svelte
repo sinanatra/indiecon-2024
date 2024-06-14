@@ -18,7 +18,6 @@
             body: JSON.stringify({
                 question: $question,
                 answer: text,
-                // tags: selectedTags,
             }),
         });
 

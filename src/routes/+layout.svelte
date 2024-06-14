@@ -1,7 +1,7 @@
 <nav>
     <a href="/">Start</a> —
-    <!-- <a href="/latest">Entries</a> — -->
-    <a href="/archive">Archive</a>
+    <a href="/archive">Archive</a> —
+    <a href="/history">History</a> 
 </nav>
 <slot />
 

@@ -4,6 +4,7 @@
 
     let data = [];
     let questions = [];
+    let history = [];
 
     async function fetchData() {
         const res = await fetch(`/api/getAll`);
@@ -21,25 +22,37 @@
         questions = await fetchQuestions();
 
         data = await fetchData();
-        data = data.reduce((acc, entry) => {
-        const { question, answer } = entry;
-            const lastCluster = acc[acc.length - 1];
+        let datum = data
+            .filter((d) => d.question == data[0].question)
+            .reduce((acc, entry) => {
+                const { question, answer } = entry;
+                const lastCluster = acc[acc.length - 1];
 
-            if (!lastCluster || lastCluster.question !== question) {
-                acc.push({ question, data: [{ answer }] });
-            } else {
-                lastCluster.data.push({ answer });
-            }
+                if (!lastCluster || lastCluster.question !== question) {
+                    acc.push({ question, data: [{ answer }] });
+                } else {
+                    lastCluster.data.push({ answer });
+                }
 
-            return acc;
-        }, []);
+                return acc;
+            }, []);
+
+        for (let index = 1; index <= datum[0].data.length; index++) {
+            history = [
+                ...history,
+                {
+                    question: datum[0].question,
+                    data: datum[0].data.slice(0, index),
+                },
+            ];
+        }
     });
 </script>
 
 <article>
-    {#if data.length > 0}
+    {#if history.length > 0}
         <article class="container">
-            {#each data as q, i}
+            {#each history as q, i}
                 <Poster {q} {i} {questions} submitted={true} />
             {/each}
         </article>
@@ -59,7 +72,6 @@
         flex-wrap: nowrap;
         overflow: auto;
         gap: 10px;
-        /* margin-top: 40px; */
     }
 
     p {
