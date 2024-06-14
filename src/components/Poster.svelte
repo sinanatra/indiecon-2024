@@ -136,8 +136,9 @@
 <style>
     .poster {
         border-radius: 3px;
-        height: 1198px;
-        width: 842px;
+        height: 1198px; /* a4 */
+        width: 842px; /* a4 */
+        height: 1684px; /* longer */
         flex: 0 0 842px;
         padding: 10px;
         white-space: wrap;
@@ -152,6 +153,7 @@
         margin-top: 10px;
         word-break: break-all;
         align-items: center;
+        user-select: none;
     }
 
     .metadata {
@@ -161,8 +163,8 @@
 
     .text {
         color: rgb(31, 31, 31);
-        /* color: var(--theme-color); */
-        /* opacity: 0.5; */
+        color: var(--theme-color);
+        /* opacity: 0.8; */
     }
 
     .text:after {
@@ -171,7 +173,6 @@
     }
     .empty {
         color: rgb(200, 200, 200);
-        user-select: none;
     }
 
     button {
@@ -186,6 +187,7 @@
     @media print {
         @page {
             size: A4;
+            size: 8.77in 17.54in;
             margin: 0;
         }
 
