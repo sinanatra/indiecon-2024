@@ -109,6 +109,8 @@
                 generateCombinedArray();
             });
     });
+
+    console.log(q.data.length);
 </script>
 
 <div id={`poster-${i}`}>
@@ -127,6 +129,16 @@
                     >
                 {/if}
             {/each}
+        </div>
+        <div class="metadata">
+            <p>{q.data.length} partecipations.</p>
+            <p>
+                {characters} characters used.
+            </p>
+            <p>{loremChar} characters left.</p>
+        </div>
+        <div class="metadata">
+            <p>Froh!</p>
         </div>
     </section>
 </div>
@@ -149,6 +161,12 @@
     .results {
         margin-top: 10px;
         word-break: break-all;
+    }
+
+    .metadata {
+        /* border-top: 1px dashed; */
+        margin-top: 20px;
+        padding-top: 10px;
     }
 
     .empty {
