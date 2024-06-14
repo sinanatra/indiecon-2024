@@ -63,15 +63,20 @@
         {$cartridge} characters left
         <h1>{datum.question}</h1>
         <section>
-            <div>
-                <SubmitText
-                    tags={data?.tags
-                        ? data.tags.sort()
-                        : ["happy", "okay", "sad"]}
-                    id={data._id}
-                />
+            <div style="min-width:30vw">
+                <SubmitText id={data._id} />
             </div>
-            <div>
+            <div class="answers" style="min-width:20vw">
+                <p class="title">Recent answers:</p>
+                <div>
+                    {#each posters as q, i}
+                        {#each q.data.slice(0, 10) as a}
+                            <p>{a.answer}</p>
+                        {/each}
+                    {/each}
+                </div>
+            </div>
+            <div style="min-width:30vw">
                 {#each posters as q, i}
                     <Poster {q} {i} questions={data} />
                 {/each}
@@ -84,14 +89,37 @@
     article {
         padding: 10px;
     }
+
     section {
         display: flex;
         gap: 20px;
         flex-wrap: nowrap;
         overflow: auto;
+        margin-top: 20px;
     }
 
-    div {
-        min-width: 30vw;
+    .answers {
+        border: 1px dashed;
+        padding: 10px;
+        height: fit-content;
+        background-color: rgb(248, 248, 248);
+    }
+
+    .answers div {
+        counter-reset: answ;
+    }
+
+    .answers div p {
+        margin-bottom: 8px;
+        counter-increment: answ;
+    }
+
+    .answers div p::before {
+        content: counter(answ)". ";
+    }
+
+    .title {
+        font-weight: bold;
+        margin-bottom: 10px;
     }
 </style>

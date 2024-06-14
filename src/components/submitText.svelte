@@ -73,11 +73,6 @@
         width: 100%;
     }
 
-    section {
-        padding-top: 20px;
-        /* max-width: 640px; */
-    }
-
     textarea {
         border: 1px dashed;
         background-color: rgb(248, 248, 248);
