@@ -6,7 +6,8 @@
     export let i;
 
     let noise3D;
-    const density = "▀|/:÷×+-=?*· ";
+    // const density = "█▚|/:÷×+-=?*· ";
+    const density = "█▓▒░|/:÷×+-=?*·";
 
     noise3D = function () {
         return 0;
@@ -49,14 +50,16 @@
         }
     }
 
+    const scale = Math.random() * (0.5 - 0.1) + 0.1; // 0.1
+
     function getNoiseCharacter(x, y, t) {
         // const s = 0.03;
         // const noiseValue = noise3D(x * s, (y * s) / 1.5, t);
         // const i = Math.floor((noiseValue * 0.5 + 0.5) * density.length);
-
         const s = 0.06;
+
         const noiseValue = noise3D(x * s, (y * s) / 0.5, t);
-        const i = Math.floor((noiseValue * 0.1 + 0.1) * density.length);
+        const i = Math.floor((noiseValue * scale + scale) * density.length);
         // return density[i];
 
         return density[Math.min(Math.max(i, 0), density.length - 1)];
@@ -69,7 +72,7 @@
         combinedArray = [
             ...q.data.map((d, idx) => ({
                 type: "text",
-                content: `${d.answer}・`,
+                content: `${d.answer}·`,
                 id: `text-${idx}-${d.answer}`,
             })),
             // here
@@ -119,7 +122,9 @@
                 {#if item.type === "text"}
                     <span class="text">{item.content}</span>
                 {:else}
-                    <span class="empty" style="color:{getColor(q.question)}">{item.content}</span>
+                    <span class="empty" style="color:{getColor(q.question)}"
+                        >{item.content}</span
+                    >
                 {/if}
             {/each}
         </div>
@@ -148,8 +153,6 @@
 
     .empty {
         color: rgb(200, 200, 200);
-        color: blueviolet;
-        /* opacity: 0.4; */
     }
 
     button {
@@ -160,7 +163,7 @@
     h1 {
         font-weight: bold;
     }
-    
+
     @media print {
         @page {
             size: A4;
