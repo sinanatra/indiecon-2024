@@ -136,8 +136,9 @@
 <style>
     .poster {
         border-radius: 3px;
-        height: 1198px;
-        width: 842px;
+        height: 1198px; /* a4 */
+        width: 842px; /* a4 */
+        height: 1684px; /* longer */
         flex: 0 0 842px;
         padding: 10px;
         white-space: wrap;
@@ -186,6 +187,7 @@
     @media print {
         @page {
             size: A4;
+            size: 8.77in 17.54in;
             margin: 0;
         }
 
