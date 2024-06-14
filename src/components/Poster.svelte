@@ -163,7 +163,7 @@
 
     .text {
         color: rgb(31, 31, 31);
-        color: var(--theme-color);
+        /* color: var(--theme-color); */
         /* opacity: 0.8; */
     }
 
