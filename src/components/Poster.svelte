@@ -9,6 +9,7 @@
     let noise3D;
     // const gradient = "█▓▒░|/:÷×+-=?*·";
     const gradient = "▚▀▒░|/=?*·";
+    // const gradient = "▅▄▃▂▁";
 
     noise3D = function () {
         return 0;
