@@ -15,7 +15,7 @@
 
     function printPoster(question) {
         const posterContent = document.querySelector(
-            `#poster-${question}`
+            `#poster-${question}`,
         ).innerHTML;
         document.body.innerHTML = posterContent;
         const button = document.querySelector("button");
@@ -66,16 +66,16 @@
         combinedArray = [
             ...q.data.map((d, idx) => ({
                 type: "text",
-                content: `${d.answer}·`,
-                id: `text-${idx}-${d.answer}`
+                content: `${d.answer}`,
+                id: `text-${idx}-${d.answer}`,
             })),
             ...Array(loremChar)
                 .fill()
                 .map((_, idx) => ({
                     type: "empty",
                     content: "",
-                    id: `empty-${idx}`
-                }))
+                    id: `empty-${idx}`,
+                })),
         ];
 
         shuffleArray(combinedArray);
@@ -92,7 +92,7 @@
 
     onMount(() => {
         fetch(
-            "https://raw.githubusercontent.com/blindman67/SimplexNoiseJS/master/simplexNoise.js"
+            "https://raw.githubusercontent.com/blindman67/SimplexNoiseJS/master/simplexNoise.js",
         )
             .then((e) => e.text())
             .then((e) => {
@@ -111,7 +111,7 @@
         <p>{getCartridge(q.question)} characters for a collective poster.</p>
         <h1>{q.question}</h1>
 
-        <div class="results">
+        <div class="results" style="--theme-color: {getColor(q.question)}">
             {#each combinedArray as item (item.id)}
                 {#if item.type === "text"}
                     <span class="text">{item.content}</span>
@@ -151,6 +151,7 @@
     .results {
         margin-top: 10px;
         word-break: break-all;
+        align-items: center;
     }
 
     .metadata {
@@ -158,6 +159,10 @@
         padding-top: 10px;
     }
 
+    .text:after {
+        content: "·";
+        color: var(--theme-color);
+    }
     .empty {
         color: rgb(200, 200, 200);
         user-select: none;
