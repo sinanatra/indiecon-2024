@@ -7,7 +7,8 @@
     export let submitted;
 
     let noise3D;
-    const density = "█▓▒░|/:÷×+-=?*·";
+    // const gradient = "█▓▒░|/:÷×+-=?*·";
+    const gradient = "▚▀▓▒░:÷×+-=?*·";
 
     noise3D = function () {
         return 0;
@@ -55,8 +56,8 @@
 
     function getNoiseCharacter(x, y, t) {
         const noiseValue = noise3D(x * s, (y * s) / 0.5, t);
-        const i = Math.floor((noiseValue * scale + scale) * density.length);
-        return density[Math.min(Math.max(i, 0), density.length - 1)];
+        const i = Math.floor((noiseValue * scale + scale) * gradient.length);
+        return gradient[Math.min(Math.max(i, 0), gradient.length - 1)];
     }
 
     let combinedArray = [];
@@ -91,9 +92,7 @@
     }
 
     onMount(() => {
-        fetch(
-            "https://raw.githubusercontent.com/blindman67/SimplexNoiseJS/master/simplexNoise.js",
-        )
+        fetch("simplex.js")
             .then((e) => e.text())
             .then((e) => {
                 const openSimplexNoise = new Function("return " + e)();
@@ -157,6 +156,12 @@
     .metadata {
         margin-top: 20px;
         padding-top: 10px;
+    }
+
+    .text {
+        color: rgb(31, 31, 31);
+        /* color: var(--theme-color); */
+        /* opacity: .5; */
     }
 
     .text:after {
