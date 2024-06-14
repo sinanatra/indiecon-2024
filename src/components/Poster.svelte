@@ -8,7 +8,7 @@
 
     let noise3D;
     // const gradient = "█▓▒░|/:÷×+-=?*·";
-    const gradient = "▚▀▓▒░:÷×+-=?*·";
+    const gradient = "▚▀▒░|/=?*·";
 
     noise3D = function () {
         return 0;
@@ -51,8 +51,8 @@
         }
     }
 
-    const scale = 0.2; //Math.random() * (0.5 - 0.1) + 0.1;
-    const s = Math.random() * (0.09 - 0.05) + 0.01;
+    const scale = Math.random() * (0.5 - 0.1) + 0.1;
+    const s = Math.random() * (0.09 - 0.01) + 0.01;
 
     function getNoiseCharacter(x, y, t) {
         const noiseValue = noise3D(x * s, (y * s) / 0.5, t);
@@ -159,9 +159,9 @@
     }
 
     .text {
-        /* color: rgb(31, 31, 31); */
-        color: var(--theme-color);
-        opacity: 0.5;
+        color: rgb(31, 31, 31);
+        /* color: var(--theme-color); */
+        /* opacity: 0.5; */
     }
 
     .text:after {
