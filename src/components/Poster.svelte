@@ -108,7 +108,7 @@
     {/if}
     <section class="poster">
         <p>{getCartridge(q.question)} characters for a collective poster.</p>
-        <h1>{q.question}</h1>
+        <p class="head">{q.question}</p>
 
         <div class="results" style="--theme-color: {getColor(q.question)}">
             {#each combinedArray as item (item.id)}
@@ -178,7 +178,7 @@
         margin-bottom: 20px;
     }
 
-    h1 {
+    .head {
         font-weight: bold;
     }
 
@@ -190,11 +190,6 @@
 
         .poster {
             border: none;
-        }
-
-        h1 {
-            font-size: 25px;
-            line-height: 25px;
         }
     }
 </style>
