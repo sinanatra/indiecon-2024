@@ -159,9 +159,9 @@
     }
 
     .text {
-        color: rgb(31, 31, 31);
-        /* color: var(--theme-color); */
-        /* opacity: .5; */
+        /* color: rgb(31, 31, 31); */
+        color: var(--theme-color);
+        opacity: 0.5;
     }
 
     .text:after {
