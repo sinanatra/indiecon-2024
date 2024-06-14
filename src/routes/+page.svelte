@@ -27,13 +27,13 @@
         posters = questions
             .filter((d) => d.question == data[0].question)
             .reduce((acc, entry) => {
-                const { question, answer, tags } = entry;
+                const { question, answer } = entry;
                 const lastCluster = acc[acc.length - 1];
 
                 if (!lastCluster || lastCluster.question !== question) {
-                    acc.push({ question, data: [{ answer, tags }] });
+                    acc.push({ question, data: [{ answer }] });
                 } else {
-                    lastCluster.data.push({ answer, tags });
+                    lastCluster.data.push({ answer });
                 }
 
                 return acc;
