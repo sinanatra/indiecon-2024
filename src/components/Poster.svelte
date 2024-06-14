@@ -4,9 +4,9 @@
     export let questions;
     export let q;
     export let i;
+    export let submitted;
 
     let noise3D;
-    // const density = "█▚|/:÷×+-=?*· ";
     const density = "█▓▒░|/:÷×+-=?*·";
 
     noise3D = function () {
@@ -35,7 +35,7 @@
     }
 
     const characters = q.data
-        .map((d) => d.answer.length + 1) // Include the ". " after each answer
+        .map((d) => d.answer.length + 1)
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
     const loremChar =
@@ -50,18 +50,12 @@
         }
     }
 
-    const scale = Math.random() * (0.5 - 0.1) + 0.1; // 0.1
+    const scale = Math.random() * (0.5 - 0.1) + 0.1;
 
     function getNoiseCharacter(x, y, t) {
-        // const s = 0.03;
-        // const noiseValue = noise3D(x * s, (y * s) / 1.5, t);
-        // const i = Math.floor((noiseValue * 0.5 + 0.5) * density.length);
         const s = 0.06;
-
         const noiseValue = noise3D(x * s, (y * s) / 0.5, t);
         const i = Math.floor((noiseValue * scale + scale) * density.length);
-        // return density[i];
-
         return density[Math.min(Math.max(i, 0), density.length - 1)];
     }
 
@@ -72,10 +66,9 @@
         combinedArray = [
             ...q.data.map((d, idx) => ({
                 type: "text",
-                content: `${d.answer}·`,
+                content: `${d.answer}`,
                 id: `text-${idx}-${d.answer}`,
             })),
-            // here
             ...Array(loremChar)
                 .fill()
                 .map((_, idx) => ({
@@ -98,7 +91,6 @@
     }
 
     onMount(() => {
-        // :)
         fetch(
             "https://raw.githubusercontent.com/blindman67/SimplexNoiseJS/master/simplexNoise.js",
         )
@@ -112,12 +104,14 @@
 </script>
 
 <div id={`poster-${i}`}>
-    <button on:click={() => printPoster(i)}>Print</button>
+    {#if submitted}
+        <button on:click={() => printPoster(i)}>Print</button>
+    {/if}
     <section class="poster">
         <p>{getCartridge(q.question)} characters for a collective poster.</p>
         <h1>{q.question}</h1>
 
-        <div class="results">
+        <div class="results" style="--theme-color: {getColor(q.question)}">
             {#each combinedArray as item (item.id)}
                 {#if item.type === "text"}
                     <span class="text">{item.content}</span>
@@ -127,6 +121,14 @@
                     >
                 {/if}
             {/each}
+        </div>
+        <div class="metadata">
+            <p>{q.data.length} participations.</p>
+            <p>{characters} characters used.</p>
+            <p>{loremChar} characters left.</p>
+        </div>
+        <div class="metadata">
+            <p>Froh!</p>
         </div>
     </section>
 </div>
@@ -149,10 +151,21 @@
     .results {
         margin-top: 10px;
         word-break: break-all;
+        align-items: center;
     }
 
+    .metadata {
+        margin-top: 20px;
+        padding-top: 10px;
+    }
+
+    .text:after {
+        content: "·";
+        color: var(--theme-color);
+    }
     .empty {
         color: rgb(200, 200, 200);
+        user-select: none;
     }
 
     button {

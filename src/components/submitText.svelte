@@ -1,23 +1,14 @@
 <script>
-    import MultiSelect from "svelte-multiselect";
     import { question } from "$lib/stores/question.js";
-    import { cartridge } from "$lib/stores/cartridge.js";
 
     let text = "";
     let message = "";
-    export let tags;
-    export let id;
-    let selectedTags;
 
     const handleSubmit = async () => {
         if (!text.trim()) {
             alert("Text field cannot be empty");
             return;
         }
-        // if (selectedTags.length < 2) {
-        //     alert("Tags should be at least 2");
-        //     return;
-        // }
 
         const postRequest = await fetch("/api/post", {
             method: "POST",
@@ -30,15 +21,6 @@
                 // tags: selectedTags,
             }),
         });
-
-        // const patchRequest = await fetch("/api/question", {
-        //     method: "PATCH",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify({
-        //         id: id,
-        //         // tags: selectedTags,
-        //     }),
-        // });
 
         const responses = await Promise.all([postRequest]);
         const success = responses.every((response) => response.ok);
@@ -57,7 +39,9 @@
     {#if message}
         <div class="message">
             <p>{message}</p>
-            <a href="/" target="_self">Check the latest entries.</a>
+            <a href="/archive" target="_self"
+                >Check the latest entries and print it.</a
+            >
         </div>
     {:else}
         <section>
@@ -65,18 +49,10 @@
                 name="answer"
                 id="answer"
                 bind:value={text}
-                maxlength="400"
+                maxlength="107"
                 required
             ></textarea>
-
-            <!-- <MultiSelect
-                id="tag-select"
-                options={tags}
-                bind:value={selectedTags}
-                placeholder="Select 3 tags or add new ones.."
-                allowUserOptions="append"
-                required
-            ></MultiSelect> -->
+            <!-- the max length == same as one line -->
 
             <button on:click={handleSubmit}>Submit</button>
         </section>

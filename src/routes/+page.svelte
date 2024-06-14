@@ -87,6 +87,8 @@
     section {
         display: flex;
         gap: 20px;
+        flex-wrap: nowrap;
+        overflow: auto;
     }
 
     div {
