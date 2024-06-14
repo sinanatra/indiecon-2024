@@ -50,10 +50,10 @@
         }
     }
 
-    const scale = Math.random() * (0.5 - 0.1) + 0.1;
+    const scale = 0.2; //Math.random() * (0.5 - 0.1) + 0.1;
+    const s = Math.random() * (0.09 - 0.05) + 0.01;
 
     function getNoiseCharacter(x, y, t) {
-        const s = 0.06;
         const noiseValue = noise3D(x * s, (y * s) / 0.5, t);
         const i = Math.floor((noiseValue * scale + scale) * density.length);
         return density[Math.min(Math.max(i, 0), density.length - 1)];
