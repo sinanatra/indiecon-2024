@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import Poster from "@components/Poster.svelte";
-    
+
     let data = [];
     let questions = [];
 
@@ -40,7 +40,7 @@
     {#if data.length > 0}
         <article class="container">
             {#each data as q, i}
-                <Poster {q} {i} {questions} />
+                <Poster {q} {i} {questions} submitted={true} />
             {/each}
         </article>
     {:else}
