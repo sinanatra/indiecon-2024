@@ -7,8 +7,8 @@
     export let submitted;
 
     let noise3D;
-    const gradient = "█▓▒░|/:÷×+-=?*·";
-    // const gradient = "▚▀▒░#@/*+=-:. ";
+    // const gradient = "█▓▒░|/:÷×+-=?*·";
+    const gradient = "▚▀▒░#@/*+=-:.";
     // const gradient = "▅▄▃▂▁";
 
     noise3D = function () {
@@ -66,6 +66,11 @@
 
     function generateCombinedArray() {
         combinedArray = [
+            ...q.data.map((d, idx) => ({
+                type: "text",
+                content: `${d.answer.trim()}`,
+                id: `text-${idx}-${d.answer.trim()}`,
+            })),
             ...Array(loremChar)
                 .fill()
                 .map((_, idx) => ({
@@ -73,11 +78,6 @@
                     content: "",
                     id: `empty-${idx}`,
                 })),
-            ...q.data.map((d, idx) => ({
-                type: "text",
-                content: `${d.answer.trim()}`,
-                id: `text-${idx}-${d.answer.trim()}`,
-            })),
         ];
 
         shuffleArray(combinedArray);
@@ -158,7 +158,7 @@
         margin-bottom: 10px;
         font-size: 13px;
         line-height: 13px;
-        font-family: 'Courier New', Courier, monospace;
+        font-family: "Courier New", Courier, monospace;
         word-break: break-all !important;
     }
 
@@ -166,7 +166,6 @@
         margin-top: 10px;
         align-items: center;
     }
-  
 
     .metadata {
         margin-top: 20px;
@@ -182,8 +181,10 @@
     .text:after {
         content: "*";
         content: "░";
+        content: "▚";
         color: var(--theme-color);
     }
+
     .empty {
         user-select: none;
         color: rgb(200, 200, 200);
