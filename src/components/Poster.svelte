@@ -82,12 +82,24 @@
 
         shuffleArray(combinedArray);
 
+        let textIndices = new Set();
+
+        // Mark text indices
+        combinedArray.forEach((item, index) => {
+            if (item.type === "text") {
+                for (let i = 0; i < item.content.length; i++) {
+                    textIndices.add(index + i);
+                }
+            }
+        });
+
         combinedArray = combinedArray.map((item, index) => {
-            if (item.type === "empty") {
+            if (item.type === "empty" && !textIndices.has(index)) {
                 const x = index % 107;
                 const y = Math.floor(index / 107);
                 item.content = getNoiseCharacter(x, y, t);
             }
+
             return item;
         });
     }
@@ -153,7 +165,9 @@
         margin-top: 10px;
         word-break: break-all;
         align-items: center;
-        user-select: none;
+    }
+    span {
+        word-break: break-all;
     }
 
     .metadata {
@@ -172,6 +186,7 @@
         color: var(--theme-color);
     }
     .empty {
+        user-select: none;
         color: rgb(200, 200, 200);
     }
 
