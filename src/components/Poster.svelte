@@ -37,7 +37,7 @@
     }
 
     const characters = q.data
-        .map((d) => d.answer.length + 1)
+        .map((d) => d.answer.trim().length + 1)
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
     const loremChar =
@@ -75,8 +75,8 @@
                 })),
             ...q.data.map((d, idx) => ({
                 type: "text",
-                content: `${d.answer}`,
-                id: `text-${idx}-${d.answer}`,
+                content: `${d.answer.trim()}`,
+                id: `text-${idx}-${d.answer.trim()}`,
             })),
         ];
 
