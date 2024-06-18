@@ -7,8 +7,8 @@
     export let submitted;
 
     let noise3D;
-    // const gradient = "█▓▒░|/:÷×+-=?*·";
-    const gradient = "▚▀▒░|/=?*·";
+    const gradient = "█▓▒░|/:÷×+-=?*· ";
+    // const gradient = "▚▀▒░#@/*+=-:. ";
     // const gradient = "▅▄▃▂▁";
 
     noise3D = function () {
@@ -45,15 +45,8 @@
             ? Number(getCartridge(q.question)) - characters
             : 0;
 
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-    }
-
-    const scale = Math.random() * (0.9 - 0.1) + 0.1;
-    const s = Math.random() * (0.09 - 0.01) + 0.01;
+    const scale = Math.random() * (0.5 - 0.1) + 0.1;
+    const s = Math.random() * (0.09 - 0.03) + 0.01;
 
     function getNoiseCharacter(x, y, t) {
         const noiseValue = noise3D(x * s, (y * s) / 0.5, t);
@@ -63,6 +56,13 @@
 
     let combinedArray = [];
     let t = 0;
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
 
     function generateCombinedArray() {
         combinedArray = [

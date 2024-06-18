@@ -48,10 +48,11 @@
                 ...history,
                 {
                     question: datum[0].question,
-                    data: datum[0].data.slice(0, index),
+                    data: datum[0].data.reverse().slice(0, index),
                 },
             ];
         }
+        console.log(history)
     });
 </script>
 
