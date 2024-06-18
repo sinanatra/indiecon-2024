@@ -7,7 +7,7 @@
     export let submitted;
 
     let noise3D;
-    const gradient = "█▓▒░|/:÷×+-=?*· ";
+    const gradient = "█▓▒░|/:÷×+-=?*·";
     // const gradient = "▚▀▒░#@/*+=-:. ";
     // const gradient = "▅▄▃▂▁";
 
@@ -66,11 +66,6 @@
 
     function generateCombinedArray() {
         combinedArray = [
-            ...q.data.map((d, idx) => ({
-                type: "text",
-                content: `${d.answer}`,
-                id: `text-${idx}-${d.answer}`,
-            })),
             ...Array(loremChar)
                 .fill()
                 .map((_, idx) => ({
@@ -78,6 +73,11 @@
                     content: "",
                     id: `empty-${idx}`,
                 })),
+            ...q.data.map((d, idx) => ({
+                type: "text",
+                content: `${d.answer}`,
+                id: `text-${idx}-${d.answer}`,
+            })),
         ];
 
         shuffleArray(combinedArray);
@@ -158,17 +158,15 @@
         margin-bottom: 10px;
         font-size: 13px;
         line-height: 13px;
-        font-family: monospace;
+        font-family: 'Courier New', Courier, monospace;
+        word-break: break-all !important;
     }
 
     .results {
         margin-top: 10px;
-        word-break: break-all;
         align-items: center;
     }
-    span {
-        word-break: break-all;
-    }
+  
 
     .metadata {
         margin-top: 20px;
@@ -182,7 +180,8 @@
     }
 
     .text:after {
-        content: "·";
+        content: "*";
+        content: "░";
         color: var(--theme-color);
     }
     .empty {
