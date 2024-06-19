@@ -7,8 +7,8 @@
     export let submitted;
 
     let noise3D;
+    const gradient = "▚▀▒░#@/*+=-:·";
     // const gradient = "█▓▒░|/:÷×+-=?*·";
-    const gradient = "▚▀▒░#@/*+=-:.";
     // const gradient = "▅▄▃▂▁";
 
     noise3D = function () {
@@ -45,8 +45,8 @@
             ? Number(getCartridge(q.question)) - characters
             : 0;
 
-    const scale = Math.random() * (0.5 - 0.1) + 0.1;
-    const s = Math.random() * (0.09 - 0.03) + 0.01;
+    let scale = Math.random() * (0.5 - 0.1) + 0.1;
+    let s = Math.random() * (0.09 - 0.03) + 0.01;
 
     function getNoiseCharacter(x, y, t) {
         const noiseValue = noise3D(x * s, (y * s) / 0.5, t);
@@ -62,6 +62,18 @@
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
         }
+    }
+
+    let change = false;
+    function changeLayout() {
+        change = !change;
+        generateCombinedArray();
+    }
+
+    function reDraw() {
+        scale = Math.random() * (0.5 - 0.1) + 0.1;
+        s = Math.random() * (0.09 - 0.03) + 0.01;
+        generateCombinedArray();
     }
 
     function generateCombinedArray() {
@@ -80,7 +92,9 @@
                 })),
         ];
 
-        shuffleArray(combinedArray);
+        if (!change) {
+            shuffleArray(combinedArray);
+        }
 
         let textIndices = new Set();
 
@@ -118,6 +132,8 @@
 <div id={`poster-${i}`}>
     {#if submitted}
         <button on:click={() => printPoster(i)}>Print</button>
+        <button on:click={() => reDraw()}>Change Pattern</button>
+        <button on:click={() => changeLayout()}>Shuffle/Merge Text</button>
     {/if}
     <section class="poster">
         <p>{getCartridge(q.question)} characters for a collective poster.</p>
@@ -179,9 +195,9 @@
     }
 
     .text:after {
-        content: "*";
-        content: "░";
         content: "▚";
+        content: "░";
+        content: "*";
         color: var(--theme-color);
     }
 
@@ -193,6 +209,7 @@
     button {
         position: relative;
         margin-bottom: 20px;
+        cursor: pointer;
     }
 
     .head {
