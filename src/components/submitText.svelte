@@ -38,7 +38,7 @@
     {#if message}
         <div class="message">
             <p>{message}</p>
-            <a href="/archive" target="_self"
+            <a href="/recent" target="_self"
                 >Check the latest entries and print it.</a
             >
         </div>
