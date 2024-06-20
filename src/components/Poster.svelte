@@ -20,8 +20,11 @@
             `#poster-${question}`,
         ).innerHTML;
         document.body.innerHTML = posterContent;
-        const button = document.querySelector("button");
-        button.style.display = "none";
+        const buttons = document.querySelectorAll("button");
+        buttons.forEach((button) => {
+            button.style.display = "none";
+        });
+
         window.print();
         location.reload();
     }
@@ -133,7 +136,9 @@
     {#if submitted}
         <button on:click={() => printPoster(i)}>Print</button>
         <button on:click={() => reDraw()}>Change Pattern</button>
-        <button on:click={() => changeLayout()}>{change ? "Shuffle Text" : "Sort text"}</button>
+        <button on:click={() => changeLayout()}
+            >{change ? "Shuffle Text" : "Sort text"}</button
+        >
     {/if}
     <section class="poster">
         <p>{getCartridge(q.question)} characters for a collective poster.</p>
