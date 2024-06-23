@@ -7,9 +7,13 @@
     export let submitted;
 
     let noise3D;
-    const gradient = "▚▀▒░#@/*+=-:·";
-    // const gradient = "█▓▒░|/:÷×+-=?*·";
-    // const gradient = "▅▄▃▂▁";
+    let gradient = "▚▀▒░#@/*+=-:·";
+    // let gradient = "█▓▒░|/:÷×+-=?*·";
+    // let gradient = "▅▄▃▂▁";
+    gradient = "█▉▊▋▌▍▎▏"
+    gradient = "█▊▋▌▓▒░▍▎▏"
+    gradient = "█▍▎▏▓▒░#@/*+=-:·"
+
 
     noise3D = function () {
         return 0;
