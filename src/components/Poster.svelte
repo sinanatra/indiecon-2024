@@ -8,12 +8,19 @@
 
     let noise3D;
     let gradient = "▚▀▒░#@/*+=-:·";
-    // let gradient = "█▓▒░|/:÷×+-=?*·";
-    // let gradient = "▅▄▃▂▁";
-    gradient = "█▉▊▋▌▍▎▏"
-    gradient = "█▊▋▌▓▒░▍▎▏"
-    gradient = "█▍▎▏▓▒░#@/*+=-:·"
+    // gradient = "█▉▊▋▌▍▎▏";
+    // gradient = "█▊▋▌▓▒░▍▎▏";
+    gradient = "█▍▎▏▚▀▓▒░#@/*+=-:·";
 
+    let gradientOpacities = {};
+    const minOpacity = 0.1;
+    const maxOpacity = 0.9;
+    const gradientLength = gradient.length;
+    gradient.split("").forEach((char, index) => {
+        gradientOpacities[char] =
+            maxOpacity -
+            (index * (maxOpacity - minOpacity)) / (gradientLength - 1);
+    });
 
     noise3D = function () {
         return 0;
@@ -30,7 +37,7 @@
         });
 
         window.print();
-        location.reload();
+        location.assign("/");
     }
 
     function getCartridge(question) {
@@ -103,25 +110,27 @@
             shuffleArray(combinedArray);
         }
 
-        let textIndices = new Set();
-
-        // Mark text indices
-        combinedArray.forEach((item, index) => {
+        combinedArray = combinedArray.flatMap((item, index) => {
             if (item.type === "text") {
-                for (let i = 0; i < item.content.length; i++) {
-                    textIndices.add(index + i);
-                }
-            }
-        });
-
-        combinedArray = combinedArray.map((item, index) => {
-            if (item.type === "empty" && !textIndices.has(index)) {
-                const x = index % 107;
-                const y = Math.floor(index / 107);
+                return item.content.split("").map((char, charIdx) => {
+                    const x = (index + charIdx) % 105;
+                    const y = Math.floor((index + charIdx) / 105);
+                    const noiseChar = getNoiseCharacter(x, y, t);
+                    return {
+                        type: "char",
+                        content: char,
+                        noiseChar: noiseChar,
+                        opacity: gradientOpacities[noiseChar],
+                        id: `char-${index}-${charIdx}`,
+                    };
+                });
+            } else {
+                const x = index % 105;
+                const y = Math.floor(index / 105);
                 item.content = getNoiseCharacter(x, y, t);
+                item.opacity = gradientOpacities[item.content];
+                return [item];
             }
-
-            return item;
         });
     }
 
@@ -150,8 +159,14 @@
 
         <div class="results" style="--theme-color: {getColor(q.question)}">
             {#each combinedArray as item (item.id)}
-                {#if item.type === "text"}
-                    <span class="text">{item.content}</span>
+                {#if item.type === "char"}
+                    <span class="word" style="display:inline-block;">
+                        <span
+                            style="opacity:{item.opacity}; font-variation-settings: 'wght'{item.opacity *
+                                1000};"
+                            class="text">{item.content}</span
+                        >
+                    </span>
                 {:else}
                     <span class="empty" style="color:{getColor(q.question)}"
                         >{item.content}</span
@@ -159,6 +174,7 @@
                 {/if}
             {/each}
         </div>
+
         <div class="metadata">
             <p>{q.data.length} participations.</p>
             <p>{characters} characters used.</p>
@@ -183,7 +199,7 @@
         margin-bottom: 10px;
         font-size: 13px;
         line-height: 13px;
-        font-family: "Courier New", Courier, monospace;
+        font-family: "sono", monospace;
         word-break: break-all !important;
     }
 
@@ -198,17 +214,20 @@
     }
 
     .text {
-        color: rgb(31, 31, 31);
+        color: hsl(0, 0%, 5%);
+
+        /* text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased !important; */
         /* color: var(--theme-color); */
         /* opacity: 0.8; */
     }
 
-    .text:after {
+    /* .text:after {
         content: "▚";
         content: "░";
         content: "*";
         color: var(--theme-color);
-    }
+    } */
 
     .empty {
         user-select: none;
@@ -225,6 +244,11 @@
         font-weight: bold;
     }
 
+    .word {
+        display: inline;
+        min-width: 1ch;
+    }
+
     @media print {
         @page {
             size: A4;
@@ -235,5 +259,12 @@
         .poster {
             border: none;
         }
+    }
+
+    @font-face {
+        font-family: "sono";
+        src: url("./fonts/sono.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
     }
 </style>

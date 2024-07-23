@@ -63,10 +63,10 @@
         {$cartridge} characters left
         <h1>{datum.question}</h1>
         <section>
-            <div style="min-width:30vw">
+            <div style="min-width:70vw">
                 <SubmitText id={data._id} />
             </div>
-            <div class="answers" style="min-width:20vw">
+            <!-- <div class="answers" style="min-width:20vw">
                 <p class="title">Recent answers:</p>
                 <div>
                     {#each posters as q, i}
@@ -75,7 +75,7 @@
                         {/each}
                     {/each}
                 </div>
-            </div>
+            </div>-->
             <div style="min-width:30vw">
                 {#each posters as q, i}
                     <Poster {q} {i} questions={data} />
@@ -115,7 +115,7 @@
     }
 
     .answers div p::before {
-        content: counter(answ)". ";
+        content: counter(answ) ". ";
     }
 
     .title {

@@ -1,8 +1,8 @@
 <script>
     import { question } from "$lib/stores/question.js";
+    import { goto } from "$app/navigation";
 
     let text = "";
-    let message = "";
 
     const handleSubmit = async () => {
         if (!text.trim()) {
@@ -26,45 +26,29 @@
 
         if (success) {
             console.log("Data submitted successfully.");
-            message = "Data submitted successfully.";
+            goto(`/recent`);
         } else {
             console.error("Failed to submit data.");
-            message = "Failed to submit data.";
         }
     };
 </script>
 
 <section>
-    {#if message}
-        <div class="message">
-            <p>{message}</p>
-            <a href="/recent" target="_self"
-                >Check the latest entries and print it.</a
-            >
-        </div>
-    {:else}
-        <section>
-            <textarea
-                name="answer"
-                id="answer"
-                bind:value={text}
-                maxlength="107"
-                required
-            ></textarea>
-            <!-- the max length == same as one line -->
+    <section>
+        <textarea
+            name="answer"
+            id="answer"
+            bind:value={text}
+            maxlength="107"
+            required
+        ></textarea>
+        <!-- the max length == same as one line -->
 
-            <button on:click={handleSubmit}>Submit</button>
-        </section>
-    {/if}
+        <button on:click={handleSubmit}>Submit</button>
+    </section>
 </section>
 
 <style>
-    .message {
-        background-color: yellow;
-        padding: 10px;
-        border-radius: 3px;
-    }
-
     :global(div.multiselect) {
         background: white !important;
         border: none !important;
@@ -77,10 +61,13 @@
         background-color: rgb(248, 248, 248);
         border-radius: 3px;
         width: 100%;
-        height: 150px;
+        height: 350px;
         resize: none;
         max-width: 100%;
-        font-size: 18px;
+        color: blue;
+        font-family: sans-serif;
+        font-size: 36px;
+        outline: none !important;\
     }
 
     input {
@@ -96,7 +83,7 @@
         color: black;
         margin-top: 5px;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 24px;
         border-radius: 5px;
     }
 
