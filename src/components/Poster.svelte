@@ -148,10 +148,10 @@
 <div id={`poster-${i}`}>
     {#if submitted}
         <button on:click={() => printPoster(i)}>Print</button>
-        <button on:click={() => reDraw()}>Change Pattern</button>
+        <!-- <button on:click={() => reDraw()}>Change Pattern</button>
         <button on:click={() => changeLayout()}
             >{change ? "Shuffle Text" : "Sort text"}</button
-        >
+        > -->
     {/if}
     <section class="poster">
         <p>{getCartridge(q.question)} characters for a collective poster.</p>
