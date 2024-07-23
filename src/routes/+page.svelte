@@ -53,9 +53,8 @@
             datum.cartridge - remainingChar > 0
                 ? datum.cartridge - remainingChar
                 : 0;
-
-        console.log(posters);
     });
+
 </script>
 
 <article>
@@ -64,7 +63,7 @@
         <h1>{datum.question}</h1>
         <section>
             <div style="min-width:70vw">
-                <SubmitText id={data._id} />
+                <SubmitText id={data._id} colour={datum.color}/>
             </div>
             <!-- <div class="answers" style="min-width:20vw">
                 <p class="title">Recent answers:</p>

@@ -16,7 +16,7 @@
     const minOpacity = 0.1;
     const maxOpacity = 0.9;
     const gradientLength = gradient.length;
-    gradient.split("").forEach((char, index) => {
+    gradient.split("").reverse().forEach((char, index) => {
         gradientOpacities[char] =
             maxOpacity -
             (index * (maxOpacity - minOpacity)) / (gradientLength - 1);
@@ -161,8 +161,9 @@
             {#each combinedArray as item (item.id)}
                 {#if item.type === "char"}
                     <span class="word" style="display:inline-block;">
+                        <span class="text noise">{item.noiseChar}</span>
                         <span
-                            style="opacity:{item.opacity}; font-variation-settings: 'wght'{item.opacity *
+                            style="font-variation-settings: 'wght'{item.opacity *
                                 1000};"
                             class="text">{item.content}</span
                         >
@@ -201,6 +202,7 @@
         line-height: 13px;
         font-family: "sono", monospace;
         word-break: break-all !important;
+        user-select: none;
     }
 
     .results {
@@ -214,12 +216,13 @@
     }
 
     .text {
-        color: #3f3f3f;
+        color: #252525;
+    }
 
-        /* text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased !important; */
-        /* color: var(--theme-color); */
-        /* opacity: 0.8; */
+    .noise {
+        opacity: .3;
+        color: var(--theme-color);
+        /* color: #9f9f9f; */
     }
 
     /* .text:after {
@@ -230,7 +233,6 @@
     } */
 
     .empty {
-        user-select: none;
         color: rgb(200, 200, 200);
     }
 
@@ -247,6 +249,13 @@
     .word {
         display: inline;
         min-width: 1ch;
+        position: relative;
+        mix-blend-mode: multiply;
+    }
+
+    .word > * {
+        position: absolute;
+        top: -1.3ch;
     }
 
     @media print {

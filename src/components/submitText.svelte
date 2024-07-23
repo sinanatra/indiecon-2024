@@ -2,6 +2,7 @@
     import { question } from "$lib/stores/question.js";
     import { goto } from "$app/navigation";
 
+    export let colour;
     let text = "";
 
     const handleSubmit = async () => {
@@ -34,13 +35,14 @@
 </script>
 
 <section>
-    <section>
+    <section style="color: {colour}">
         <textarea
             name="answer"
             id="answer"
             bind:value={text}
             maxlength="107"
             required
+            style="color: {colour}"
         ></textarea>
         <!-- the max length == same as one line -->
 
@@ -64,7 +66,6 @@
         height: 350px;
         resize: none;
         max-width: 100%;
-        color: blue;
         font-family: sans-serif;
         font-size: 36px;
         outline: none !important;
