@@ -255,7 +255,7 @@
 
     .word > * {
         position: absolute;
-        top: -1.3ch;
+        top: -0.8em;
     }
 
     @media print {
