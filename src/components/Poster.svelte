@@ -214,7 +214,7 @@
     }
 
     .text {
-        color: hsl(0, 0%, 5%);
+        color: #3f3f3f;
 
         /* text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased !important; */
