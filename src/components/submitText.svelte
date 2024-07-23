@@ -67,7 +67,7 @@
         color: blue;
         font-family: sans-serif;
         font-size: 36px;
-        outline: none !important;\
+        outline: none !important;
     }
 
     input {
