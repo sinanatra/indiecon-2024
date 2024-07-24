@@ -42,7 +42,7 @@
                 name="answer"
                 id="answer"
                 bind:value={text}
-                maxlength="107"
+                maxlength="321"
                 required
                 style="color: {colour}"
             ></textarea>
