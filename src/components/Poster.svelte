@@ -270,7 +270,7 @@
 
     @font-face {
         font-family: "sono";
-        src: url("./fonts/sono.ttf") format("truetype");
+        src: url("fonts/sono.ttf") format("truetype");
         font-weight: normal;
         font-style: normal;
     }
