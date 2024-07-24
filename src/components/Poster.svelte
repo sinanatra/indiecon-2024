@@ -13,7 +13,7 @@
     gradient = "█▍▎▏▚▀▓▒░#@/*+=-:·";
 
     let gradientOpacities = {};
-    const minOpacity = 0.1;
+    const minOpacity = 0.0;
     const maxOpacity = 1.0;
     const gradientLength = gradient.length;
     gradient
@@ -146,6 +146,10 @@
                 generateCombinedArray();
             });
     });
+
+    function mapValue(value, inMin, inMax, outMin, outMax) {
+        return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
+    }
 </script>
 
 <div id={`poster-${i}`}>
@@ -164,12 +168,14 @@
             {#each combinedArray as item (item.id)}
                 {#if item.type === "char"}
                     <span class="word" style="display:inline-block;">
-                        <!-- <span class="text noise">{item.noiseChar}</span> -->
                         <span
-                            style="font-variation-settings: 'wght'{item.opacity *
-                                1000};
-                            opacity: {item.opacity + 0.05}
-                            "
+                            style="opacity: {item.opacity}; font-variation-settings: 'wght'{mapValue(
+                                item.opacity,
+                                0.1,
+                                0.9,
+                                200,
+                                800,
+                            )};"
                             class="text">{item.content}</span
                         >
                     </span>
@@ -226,19 +232,6 @@
         color: black;
     }
 
-    .noise {
-        opacity: 0.3;
-        color: var(--theme-color);
-        /* color: #9f9f9f; */
-    }
-
-    /* .text:after {
-        content: "▚";
-        content: "░";
-        content: "*";
-        color: var(--theme-color);
-    } */
-
     .empty {
         color: rgb(200, 200, 200);
     }
@@ -254,15 +247,7 @@
     }
 
     .word {
-        display: inline;
         min-width: 1ch;
-        position: relative;
-        mix-blend-mode: multiply;
-    }
-
-    .word > * {
-        position: absolute;
-        top: -0.8em;
     }
 
     @media print {

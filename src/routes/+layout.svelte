@@ -1,9 +1,9 @@
-<nav>
+<!-- <nav>
     <a href="/">Start</a> —
     <a href="/recent">Recent</a> —
     <a href="/posters">Posters</a> —
     <a href="/history">History</a> 
-</nav>
+</nav> -->
 <slot />
 
 <style>
@@ -14,9 +14,9 @@
         padding: 10px;
         margin: 10px;
         border-radius: 3px;
-        position: sticky;
-        top: 10px;
-        z-index: 10;
+        /* position: sticky;
+        top: 10px; */
+        /* z-index: 10; */
     }
 
     a {
