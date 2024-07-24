@@ -14,13 +14,16 @@
 
     let gradientOpacities = {};
     const minOpacity = 0.1;
-    const maxOpacity = 0.9;
+    const maxOpacity = 1.0;
     const gradientLength = gradient.length;
-    gradient.split("").reverse().forEach((char, index) => {
-        gradientOpacities[char] =
-            maxOpacity -
-            (index * (maxOpacity - minOpacity)) / (gradientLength - 1);
-    });
+    gradient
+        .split("")
+        // .reverse()
+        .forEach((char, index) => {
+            gradientOpacities[char] =
+                maxOpacity -
+                (index * (maxOpacity - minOpacity)) / (gradientLength - 1);
+        });
 
     noise3D = function () {
         return 0;
@@ -97,7 +100,7 @@
                 content: `${d.answer.trim()}`,
                 id: `text-${idx}-${d.answer.trim()}`,
             })),
-            ...Array(loremChar)
+            ...Array(loremChar + 500) // eheh cheating
                 .fill()
                 .map((_, idx) => ({
                     type: "empty",
@@ -161,10 +164,12 @@
             {#each combinedArray as item (item.id)}
                 {#if item.type === "char"}
                     <span class="word" style="display:inline-block;">
-                        <span class="text noise">{item.noiseChar}</span>
+                        <!-- <span class="text noise">{item.noiseChar}</span> -->
                         <span
                             style="font-variation-settings: 'wght'{item.opacity *
-                                1000};"
+                                1000};
+                            opacity: {item.opacity + 0.05}
+                            "
                             class="text">{item.content}</span
                         >
                     </span>
@@ -217,10 +222,12 @@
 
     .text {
         color: #252525;
+        color: var(--theme-color);
+        color: black;
     }
 
     .noise {
-        opacity: .3;
+        opacity: 0.3;
         color: var(--theme-color);
         /* color: #9f9f9f; */
     }
