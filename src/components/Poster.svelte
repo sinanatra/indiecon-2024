@@ -13,7 +13,7 @@
     gradient = "█▍▎▏▚▀▓▒░#@/*+=-:·";
 
     let gradientOpacities = {};
-    const minOpacity = 0.0;
+    const minOpacity = 0.1;
     const maxOpacity = 1.0;
     const gradientLength = gradient.length;
     gradient
@@ -62,8 +62,14 @@
             ? Number(getCartridge(q.question)) - characters
             : 0;
 
-    let scale = Math.random() * (0.5 - 0.1) + 0.1;
-    let s = Math.random() * (0.09 - 0.03) + 0.01;
+    let scale =
+        loremChar > 2000
+            ? Math.random() * (0.5 - 0.1) + 0.1
+            : Math.random() * (0.9 - 0.3) + 0.5;
+    let s =
+        loremChar > 2000
+            ? Math.random() * (0.09 - 0.03) + 0.01
+            : Math.random() * (0.05 - 0.03) + 0.05;
 
     function getNoiseCharacter(x, y, t) {
         const noiseValue = noise3D(x * s, (y * s) / 0.5, t);
@@ -171,8 +177,8 @@
                         <span
                             style="opacity: {item.opacity}; font-variation-settings: 'wght'{mapValue(
                                 item.opacity,
-                                0.1,
-                                0.9,
+                                minOpacity,
+                                maxOpacity,
                                 200,
                                 800,
                             )};"

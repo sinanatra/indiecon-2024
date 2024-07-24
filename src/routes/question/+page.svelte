@@ -55,7 +55,6 @@
 <style>
     article {
         padding: 10px;
-        background-color: gainsboro;
         height: 100vh;
     }
 
@@ -70,8 +69,6 @@
     }
 
     textarea {
-        border: none;
-        background-color: white;
         border-radius: 3px;
         width: 100%;
         height: 200px;
@@ -80,7 +77,6 @@
     }
 
     input {
-        border: none;
         width: 100%;
         max-width: 100%;
         font-size: 16px;
