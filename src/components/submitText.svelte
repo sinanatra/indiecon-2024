@@ -1,5 +1,6 @@
 <script>
     import { question } from "$lib/stores/question.js";
+    import { cartridge } from "$lib/stores/cartridge.js";
     import { goto } from "$app/navigation";
 
     export let colour;
@@ -36,17 +37,30 @@
 
 <section>
     <section style="color: {colour}">
-        <textarea
-            name="answer"
-            id="answer"
-            bind:value={text}
-            maxlength="107"
-            required
-            style="color: {colour}"
-        ></textarea>
-        <!-- the max length == same as one line -->
+        {#if $cartridge > 107}
+            <textarea
+                name="answer"
+                id="answer"
+                bind:value={text}
+                maxlength="107"
+                required
+                style="color: {colour}"
+            ></textarea>
+            <!-- the max length == same as one line -->
 
-        <button on:click={handleSubmit}>Submit</button>
+            <button on:click={handleSubmit}>Submit</button>
+        {:else}
+            <textarea
+                bind:value={text}
+                maxlength="107"
+                required
+                style="color: {colour}"
+                disabled
+            ></textarea>
+            <!-- the max length == same as one line -->
+
+            <button disabled>Submit</button>
+        {/if}
     </section>
 </section>
 
@@ -66,7 +80,7 @@
         height: 350px;
         resize: none;
         max-width: 100%;
-        font-family: sans-serif;
+        font-family: sono, monospace;
         font-size: 36px;
         outline: none !important;
     }
@@ -88,8 +102,12 @@
         border-radius: 5px;
     }
 
-    button:hover {
+    button:not(:disabled):hover {
         background-color: blue;
         color: white;
+    }
+
+    *:disabled{
+        cursor: not-allowed;
     }
 </style>

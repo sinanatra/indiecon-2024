@@ -54,17 +54,37 @@
                 ? datum.cartridge - remainingChar
                 : 0;
     });
-
 </script>
 
 <article>
     {#if datum.question}
-        {$cartridge} characters left
+        <div style="color: {datum.color};" class="intro">
+            <p>
+                For each response submitted, you will receive a unique printed
+                poster to take home.
+            </p>
+
+            <p>
+                However, please note that once we reach the maximum number of
+                total characters submitted, we will stop printing posters.
+            </p>
+            <p>
+                To ensure everyone gets a chance to receive a poster, aim to
+                write a balanced response. Avoid writing too little to prevent
+                paper waste, and avoid writing too much to conserve ink and
+                allow others to participate.
+            </p>
+        </div>
+        <p>
+            {$cartridge} characters left
+        </p>
         <h1>{datum.question}</h1>
+
         <section>
             <div style="min-width:70vw">
-                <SubmitText id={data._id} colour={datum.color}/>
+                <SubmitText id={data._id} colour={datum.color} />
             </div>
+
             <!-- <div class="answers" style="min-width:20vw">
                 <p class="title">Recent answers:</p>
                 <div>
@@ -97,28 +117,13 @@
         margin-top: 20px;
     }
 
-    .answers {
-        border: 1px dashed;
-        padding: 10px;
-        height: fit-content;
-        background-color: rgb(248, 248, 248);
+    .intro {
+        margin-bottom: 2rem;
+        max-width: 640px;
+        font-size: 1rem;
     }
-
-    .answers div {
-        counter-reset: answ;
-    }
-
-    .answers div p {
-        margin-bottom: 8px;
-        counter-increment: answ;
-    }
-
-    .answers div p::before {
-        content: counter(answ) ". ";
-    }
-
-    .title {
-        font-weight: bold;
-        margin-bottom: 10px;
+    
+    .intro p {
+        margin-bottom: 1rem;
     }
 </style>

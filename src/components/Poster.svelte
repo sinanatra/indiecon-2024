@@ -168,8 +168,6 @@
             {#each combinedArray as item (item.id)}
                 {#if item.type === "char"}
                     <span class="word" style="display:inline-block;">
-                        <!-- <span class="text noise">{item.noiseChar}</span> -->
-
                         <span
                             style="opacity: {item.opacity}; font-variation-settings: 'wght'{mapValue(
                                 item.opacity,
@@ -234,19 +232,6 @@
         color: black;
     }
 
-    .noise {
-        opacity: 0.3;
-        color: var(--theme-color);
-        /* color: #9f9f9f; */
-    }
-
-    /* .text:after {
-        content: "▚";
-        content: "░";
-        content: "*";
-        color: var(--theme-color);
-    } */
-
     .empty {
         color: rgb(200, 200, 200);
     }
@@ -262,7 +247,6 @@
     }
 
     .word {
-        display: inline;
         min-width: 1ch;
     }
 
