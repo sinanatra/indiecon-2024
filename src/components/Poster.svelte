@@ -18,7 +18,7 @@
     const gradientLength = gradient.length;
     gradient
         .split("")
-        .reverse()
+        // .reverse()
         .forEach((char, index) => {
             gradientOpacities[char] =
                 maxOpacity -
@@ -168,7 +168,7 @@
                         <span
                             style="font-variation-settings: 'wght'{item.opacity *
                                 1000};
-                            opacity: {item.opacity}
+                            opacity: {item.opacity + 0.05}
                             "
                             class="text">{item.content}</span
                         >
@@ -223,6 +223,7 @@
     .text {
         color: #252525;
         color: var(--theme-color);
+        color: black;
     }
 
     .noise {
