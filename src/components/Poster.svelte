@@ -94,8 +94,14 @@
     }
 
     function reDraw() {
-        scale = Math.random() * (0.5 - 0.1) + 0.1;
-        s = Math.random() * (0.09 - 0.03) + 0.01;
+        scale =
+            loremChar > getCartridge(q.question) / 2
+                ? Math.random() * (0.5 - 0.1) + 0.2
+                : Math.random() * (0.9 - 0.1) + 0.2;
+        s =
+            loremChar > getCartridge(q.question) / 2
+                ? Math.random() * (0.09 - 0.03) + 0.01
+                : Math.random() * (0.09 - 0.01) + 0.05;
         generateCombinedArray();
     }
 
@@ -149,12 +155,14 @@
             .then((e) => {
                 const openSimplexNoise = new Function("return " + e)();
                 noise3D = openSimplexNoise(Date.now()).noise3D;
-                // generateCombinedArray();
+                generateCombinedArray();
             });
     });
 
     $: {
-        q, reDraw();
+        if (i != 0) {
+            reDraw();
+        }
     }
     function mapValue(value, inMin, inMax, outMin, outMax) {
         return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;

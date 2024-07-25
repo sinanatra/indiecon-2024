@@ -5,9 +5,9 @@
     let questions = [];
     let answers = [];
     let history = [];
-    let currentIndex = 1;
+    let currentIndex = 0;
     let intervalId;
-    let ms = 100;
+    let ms = 500;
     let question = "";
     let datum = [];
 
