@@ -149,7 +149,7 @@
             .then((e) => {
                 const openSimplexNoise = new Function("return " + e)();
                 noise3D = openSimplexNoise(Date.now()).noise3D;
-                generateCombinedArray();
+                // generateCombinedArray();
             });
     });
 
