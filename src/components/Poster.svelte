@@ -53,11 +53,11 @@
         return r?.color;
     }
 
-    const characters = q.data
+    $: characters = q.data
         .map((d) => d.answer.trim().length + 1)
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
-    const loremChar =
+    $: loremChar =
         Number(getCartridge(q.question)) - characters > 0
             ? Number(getCartridge(q.question)) - characters
             : 0;
@@ -153,6 +153,9 @@
             });
     });
 
+    $: {
+        q, reDraw();
+    }
     function mapValue(value, inMin, inMax, outMin, outMax) {
         return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
     }
