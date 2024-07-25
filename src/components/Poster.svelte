@@ -65,11 +65,11 @@
     let scale =
         loremChar > getCartridge(q.question) / 2
             ? Math.random() * (0.5 - 0.1) + 0.1
-            : Math.random() * (0.9 - 0.3) + 0.5;
+            : Math.random() * (0.9 - 0.1) + 0.2;
     let s =
         loremChar > getCartridge(q.question) / 2
             ? Math.random() * (0.09 - 0.03) + 0.01
-            : Math.random() * (0.05 - 0.03) + 0.05;
+            : Math.random() * (0.09 - 0.01) + 0.05;
 
     function getNoiseCharacter(x, y, t) {
         const noiseValue = noise3D(x * s, (y * s) / 0.5, t);
@@ -160,6 +160,7 @@
 
 <div id={`poster-${i}`}>
     {#if submitted}
+        <!-- {scale} / {s} -->
         <button on:click={() => printPoster(i)}>Print</button>
         <!-- <button on:click={() => reDraw()}>Change Pattern</button>
         <button on:click={() => changeLayout()}
