@@ -63,11 +63,11 @@
             : 0;
 
     let scale =
-        loremChar > 3000
+        loremChar > getCartridge(q.question) / 2
             ? Math.random() * (0.5 - 0.1) + 0.1
             : Math.random() * (0.9 - 0.3) + 0.5;
     let s =
-        loremChar > 3000
+        loremChar > getCartridge(q.question) / 2
             ? Math.random() * (0.09 - 0.03) + 0.01
             : Math.random() * (0.05 - 0.03) + 0.05;
 
