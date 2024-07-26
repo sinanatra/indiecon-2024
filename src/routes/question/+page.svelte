@@ -2,7 +2,7 @@
     import { question } from "$lib/stores/question.js";
 
     let q = "";
-    let color = "#cbffcb";
+    let color = "#0011ff";
     let cartridge = 8000;
     let message = "";
 
@@ -38,9 +38,9 @@
         <section>
             <h1>Write a Question to ask.</h1>
             <textarea name="question" id="question" bind:value={q}></textarea>
-            <h3>Choose a color</h3>
+            <h1>Choose a color</h1>
             <input type="color" id="color" name="color" bind:value={color} />
-            <h3>Cartridge</h3>
+            <h1>Cartridge</h1>
             <input
                 type="number"
                 id="number"
@@ -68,6 +68,11 @@
         max-width: 900px;
     }
 
+    h1 {
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+
     textarea {
         border-radius: 3px;
         width: 100%;
@@ -84,9 +89,9 @@
 
     button {
         border: none;
-        background-color: white;
+        background-color: rgb(216, 216, 216);
         color: black;
-        margin-top: 5px;
+        margin-top: 20px;
         cursor: pointer;
         font-size: 16px;
         border-radius: 5px;
