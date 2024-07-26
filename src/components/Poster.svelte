@@ -5,6 +5,7 @@
     export let q;
     export let i;
     export let submitted;
+    export let staticPoster;
 
     let noise3D;
     let gradient = "▚▀▒░#@/*+=-:·";
@@ -160,7 +161,7 @@
     });
 
     $: {
-        if (i != 0) {
+        if (!staticPoster && i) {
             reDraw();
         }
     }

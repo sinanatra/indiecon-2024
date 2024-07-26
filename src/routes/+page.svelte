@@ -97,7 +97,7 @@
             </div>-->
             <div style="min-width:30vw">
                 {#each posters as q, i}
-                    <Poster {q} {i} questions={data} />
+                    <Poster {q} {i} questions={data} staticPoster={true}/>
                 {/each}
             </div>
         </section>
