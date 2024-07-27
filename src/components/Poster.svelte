@@ -65,12 +65,12 @@
 
     let scale =
         loremChar > getCartridge(q.question) / 2
-            ? Math.random() * (0.5 - 0.1) + 0.2
-            : Math.random() * (0.9 - 0.1) + 0.2;
+            ? Math.random() * (0.9 - 0.1) + 0.2
+            : Math.random() * (0.5 - 0.1) + 0.2;
     let s =
         loremChar > getCartridge(q.question) / 2
-            ? Math.random() * (0.09 - 0.03) + 0.01
-            : Math.random() * (0.09 - 0.01) + 0.05;
+            ? Math.random() * (0.09 - 0.01) + 0.05
+            : Math.random() * (0.09 - 0.03) + 0.01;
 
     function getNoiseCharacter(x, y, t) {
         const noiseValue = noise3D(x * s, (y * s) / 0.5, t);
@@ -97,12 +97,12 @@
     function reDraw() {
         scale =
             loremChar > getCartridge(q.question) / 2
-                ? Math.random() * (0.5 - 0.1) + 0.2
-                : Math.random() * (0.9 - 0.1) + 0.2;
+                ? Math.random() * (0.9 - 0.1) + 0.2
+                : Math.random() * (0.5 - 0.1) + 0.2;
         s =
             loremChar > getCartridge(q.question) / 2
-                ? Math.random() * (0.09 - 0.03) + 0.01
-                : Math.random() * (0.09 - 0.01) + 0.05;
+                ? Math.random() * (0.09 - 0.01) + 0.05
+                : Math.random() * (0.09 - 0.03) + 0.01;
         generateCombinedArray();
     }
 
