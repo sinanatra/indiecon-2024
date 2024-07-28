@@ -14,6 +14,7 @@
         padding: 10px;
         margin: 10px;
         border-radius: 3px;
+        text-transform: uppercase;
         /* position: sticky;
         top: 10px; */
         /* z-index: 10; */
