@@ -12,6 +12,11 @@
     // gradient = "█▉▊▋▌▍▎▏";
     // gradient = "█▊▋▌▓▒░▍▎▏";
     gradient = "█▍▎▏▚▀▓▒░#@/*+=-:·";
+    gradient = "█▇▆▅▄▃▂▁▓▉▊▋▌▍▎▏▒░■□▪▫#@&%$O0o+=~-^:,._`'·"
+    gradient = "█▍▎▏▚▀▓▉▊▋▌▍▎▏■□▪▫#@&%$O0o+=~-^:,._`'·"
+    gradient = "█▍▎▏▚▀▓▒░#@■□▪▫/*+=-:·"
+
+
 
     let gradientOpacities = {};
     const minOpacity = 0.1;
