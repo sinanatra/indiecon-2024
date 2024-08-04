@@ -7,7 +7,7 @@
     let history = [];
     let currentIndex = 0;
     let intervalId;
-    let ms = 300;
+    let ms = 800;
     let question = "";
     let datum = [];
 

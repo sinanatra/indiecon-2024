@@ -11,12 +11,10 @@
     let gradient = "▚▀▒░#@/*+=-:·";
     // gradient = "█▉▊▋▌▍▎▏";
     // gradient = "█▊▋▌▓▒░▍▎▏";
-    gradient = "█▍▎▏▚▀▓▒░#@/*+=-:·";
-    gradient = "█▇▆▅▄▃▂▁▓▉▊▋▌▍▎▏▒░■□▪▫#@&%$O0o+=~-^:,._`'·"
-    gradient = "█▍▎▏▚▀▓▉▊▋▌▍▎▏■□▪▫#@&%$O0o+=~-^:,._`'·"
-    gradient = "█▍▎▏▚▀▓▒░#@■□▪▫/*+=-:·"
-
-
+    // gradient = "█▍▎▏▚▀▓▒░#@/*+=-:·";
+    // gradient = "█▇▆▅▄▃▂▁▓▉▊▋▌▍▎▏▒░■□▪▫#@&%$O0o+=~-^:,._`'·";
+    // gradient = "█▍▎▏▚▀▓▉▊▋▌▍▎▏■□▪▫#@&%$O0o+=~-^:,._`'·";
+    gradient = "█▍▎▏▚▀▓▒░#@■□▪▫/*+=-:·";
 
     let gradientOpacities = {};
     const minOpacity = 0.1;
@@ -118,7 +116,7 @@
                 content: `${d.answer.trim()}`,
                 id: `text-${idx}-${d.answer.trim()}`,
             })),
-            ...Array(loremChar + 500) // eheh cheating
+            ...Array(loremChar + 500) // Adding extra empty characters
                 .fill()
                 .map((_, idx) => ({
                     type: "empty",
@@ -131,26 +129,41 @@
             shuffleArray(combinedArray);
         }
 
+        let cumulativeLength = 0; // Track the cumulative length of text characters
+
         combinedArray = combinedArray.flatMap((item, index) => {
             if (item.type === "text") {
-                return item.content.split("").map((char, charIdx) => {
-                    const x = (index + charIdx) % 105;
-                    const y = Math.floor((index + charIdx) / 105);
+                // Process text characters, updating the cumulative length
+                const result = item.content.split("").map((char, charIdx) => {
+                    const x = (cumulativeLength + charIdx) % 105; // Adjust for the length of the text
+                    const y = Math.floor((cumulativeLength + charIdx) / 105);
                     const noiseChar = getNoiseCharacter(x, y, t);
                     return {
                         type: "char",
                         content: char,
                         noiseChar: noiseChar,
                         opacity: gradientOpacities[noiseChar],
-                        id: `char-${index}-${charIdx}`,
+                        id: `char-${index}-${charIdx}-${item.id}`,
                     };
                 });
+                cumulativeLength += item.content.length;
+                return result;
             } else {
-                const x = index % 105;
-                const y = Math.floor(index / 105);
-                item.content = getNoiseCharacter(x, y, t);
-                item.opacity = gradientOpacities[item.content];
+                const x = cumulativeLength % 105;
+                const y = Math.floor(cumulativeLength / 105);
+                const noiseChar = getNoiseCharacter(x, y, t);
+                const uniqueId = `empty-${index}-${cumulativeLength}-${x}-${y}`;
+                item.content = noiseChar;
+                item.opacity = gradientOpacities[noiseChar];
+                item.id = uniqueId;
+                cumulativeLength++;
                 return [item];
+            }
+        });
+
+        combinedArray.forEach((item, index) => {
+            if (!item.id) {
+                item.id = `item-${index}`;
             }
         });
     }
