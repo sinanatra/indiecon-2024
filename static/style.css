@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Recursive:wght,MONO@300..1000,1&display=swap');
+
 body {
     font-family: "sono", monospace;
+    font-family: "Recursive", monospace;
+
     margin: 0;
     font-size: 14px;
     text-rendering: optimizeLegibility;
@@ -23,6 +27,8 @@ input,
 button,
 textarea {
     font-family: "sono", monospace;
+    font-family: "Recursive", monospace;
+
 
 }
 
