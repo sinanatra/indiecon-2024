@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-
+    let charleng = 116; // 105
     export let questions;
     export let q;
     export let i;
@@ -17,7 +17,7 @@
     gradient = "█▍▎▏▚▀▓▒░#@■□▪▫/*+=-:·";
 
     let gradientOpacities = {};
-    const minOpacity = 0.1;
+    const minOpacity = 0.0;
     const maxOpacity = 1.0;
     const gradientLength = gradient.length;
     gradient
@@ -135,8 +135,10 @@
             if (item.type === "text") {
                 // Process text characters, updating the cumulative length
                 const result = item.content.split("").map((char, charIdx) => {
-                    const x = (cumulativeLength + charIdx) % 105; // Adjust for the length of the text
-                    const y = Math.floor((cumulativeLength + charIdx) / 105);
+                    const x = (cumulativeLength + charIdx) % charleng; // Adjust for the length of the text
+                    const y = Math.floor(
+                        (cumulativeLength + charIdx) / charleng,
+                    );
                     const noiseChar = getNoiseCharacter(x, y, t);
                     return {
                         type: "char",
@@ -149,8 +151,8 @@
                 cumulativeLength += item.content.length;
                 return result;
             } else {
-                const x = cumulativeLength % 105;
-                const y = Math.floor(cumulativeLength / 105);
+                const x = cumulativeLength % charleng;
+                const y = Math.floor(cumulativeLength / charleng);
                 const noiseChar = getNoiseCharacter(x, y, t);
                 const uniqueId = `empty-${index}-${cumulativeLength}-${x}-${y}`;
                 item.content = noiseChar;
@@ -210,8 +212,8 @@
                                 item.opacity,
                                 minOpacity,
                                 maxOpacity,
-                                200,
-                                800,
+                                300,
+                                1000,
                             )};"
                             class="text">{item.content}</span
                         >
@@ -246,9 +248,10 @@
         white-space: wrap;
         border: 1px dashed;
         margin-bottom: 10px;
-        font-size: 13px;
-        line-height: 13px;
-        font-family: "sono", monospace;
+        font-size: 12px;
+        line-height: 12px;
+        /* font-family: "sono", monospace; */
+        font-family: "Recursive", monospace;
         word-break: break-all !important;
         user-select: none;
     }
