@@ -29,18 +29,13 @@
         return 0;
     };
 
-    function printPoster(question) {
-        const posterContent = document.querySelector(
-            `#poster-${question}`,
-        ).innerHTML;
-        document.body.innerHTML = posterContent;
-        const buttons = document.querySelectorAll("button");
-        buttons.forEach((button) => {
-            button.style.display = "none";
-        });
-
-        window.print();
-        location.assign("/");
+    function copyPoster(question) {
+        var dummy = document.createElement("textarea");
+        document.body.appendChild(dummy);
+        dummy.value = JSON.stringify(logArray);
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
     }
 
     function getAscii(question) {
@@ -118,6 +113,8 @@
         generateCombinedArray();
     }
 
+    let logArray = [];
+
     function generateCombinedArray() {
         combinedArray = [
             // ...q.data.map((d, idx) => ({
@@ -140,7 +137,6 @@
 
         let cumulativeLength = 0;
         let noiseIndex = 0;
-        let logArray = [];
 
         combinedArray = combinedArray.flatMap((item, index) => {
             if (item.type === "text") {
@@ -234,7 +230,7 @@
 
 <div id={`poster-${i}`}>
     {#if submitted}
-        <button on:click={() => printPoster(i)}>Print</button>
+        <button on:click={() => copyPoster(i)}>Copy</button>
     {/if}
     <section class="poster">
         <p>
