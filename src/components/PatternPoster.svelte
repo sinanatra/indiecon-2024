@@ -117,11 +117,11 @@
 
     function generateCombinedArray() {
         combinedArray = [
-            // ...q.data.map((d, idx) => ({
-            //     type: "text",
-            //     content: `${d.answer.trim()}`,
-            //     id: `text-${idx}-${d.answer.trim()}`,
-            // })),
+            ...q.data.map((d, idx) => ({
+                type: "text",
+                content: `${d.answer.trim()}`,
+                id: `text-${idx}-${d.answer.trim()}`,
+            })),
             ...Array(loremChar + fixedCharCount)
                 .fill()
                 .map((_, idx) => ({
@@ -252,7 +252,7 @@
                                     300,
                                     1000,
                                 )};"
-                                class="text">{item.content}</span
+                                class="text">{item.noiseChar}</span
                             >
                         </span>
                     {:else}
@@ -305,17 +305,12 @@
         padding-top: 10px;
     }
 
-    .text {
-        color: #252525;
-        color: var(--theme-color);
-        color: black;
-    }
-
     .fixed {
         /* visibility: hidden; */
     }
 
-    .empty {
+    .empty,
+    .text {
         color: rgb(222, 222, 222);
     }
 
