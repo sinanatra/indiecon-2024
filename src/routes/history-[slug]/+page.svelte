@@ -71,6 +71,7 @@
         for (let index = 1; index <= datum[0].data.length; index++) {
             history.push({
                 question: datum[0].question,
+                ascii: question.ascii,
                 data: datum[0].data.reverse().slice(0, index),
             });
         }

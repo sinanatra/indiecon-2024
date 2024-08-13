@@ -2,8 +2,9 @@
     import { question } from "$lib/stores/question.js";
 
     let q = "";
+    let a = "";
     let color = "#0011ff";
-    let cartridge = 8000;
+    let cartridge = 12000;
     let message = "";
 
     const handleSubmit = async () => {
@@ -13,7 +14,7 @@
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ question: q, color, cartridge }),
+            body: JSON.stringify({ question: q, color, cartridge, ascii: a }),
         });
         if (!response.ok) {
             console.error("Error writing question message", {
@@ -38,6 +39,8 @@
         <section>
             <h1>Write a Question to ask.</h1>
             <textarea name="question" id="question" bind:value={q}></textarea>
+            <h1>Fixed ASCII</h1>
+            <textarea name="ascii" id="ascii" bind:value={a}></textarea>
             <h1>Choose a color</h1>
             <input type="color" id="color" name="color" bind:value={color} />
             <h1>Cartridge</h1>

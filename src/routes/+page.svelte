@@ -8,6 +8,7 @@
     let questions = [];
     let posters = [];
     let datum = "";
+
     async function fetchData() {
         const res = await fetch(`/api/question`);
         const json = await res.json();
@@ -18,6 +19,11 @@
         const res = await fetch(`/api/getAll`);
         const json = await res.json();
         return json.reverse();
+    }
+
+    function getAscii(question) {
+        const r = data.find((d) => d.question == question);
+        return r?.ascii;
     }
 
     onMount(async () => {
@@ -42,6 +48,20 @@
         datum = data[0];
         $question = datum.question;
 
+        let noiseCharArray = [];
+
+        try {
+            const ascii = getAscii($question);
+
+            if (ascii) {
+                noiseCharArray = JSON.parse(ascii);
+            } else {
+                noiseCharArray = [];
+            }
+        } catch (error) {
+            noiseCharArray = [];
+        }
+
         let remainingChar = questions
             .filter((d) => d.question == $question)
             .map((d) => d.answer.length)
@@ -49,9 +69,21 @@
                 (accumulator, currentValue) => accumulator + currentValue,
                 0,
             );
+
+        let fixedCharCount = 0;
+
+        const fixedChars = new Set(["▚", "░"]);
+
+        if (noiseCharArray.length > 0) {
+            fixedCharCount = noiseCharArray.filter((char) =>
+                fixedChars.has(char),
+            ).length;
+        }
+
+        console.log(noiseCharArray)
         $cartridge =
-            datum.cartridge - remainingChar > 0
-                ? datum.cartridge - remainingChar
+            datum.cartridge - remainingChar - fixedCharCount > 0
+                ? datum.cartridge - remainingChar - fixedCharCount
                 : 0;
     });
 </script>
@@ -97,7 +129,7 @@
             </div>-->
             <div style="min-width:30vw">
                 {#each posters as q, i}
-                    <Poster {q} {i} questions={data} staticPoster={true}/>
+                    <Poster {q} {i} questions={data} staticPoster={true} />
                 {/each}
             </div>
         </section>
@@ -122,7 +154,7 @@
         max-width: 640px;
         font-size: 1rem;
     }
-    
+
     .intro p {
         margin-bottom: 1rem;
     }

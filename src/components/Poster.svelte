@@ -7,6 +7,19 @@
     export let submitted;
     export let staticPoster;
 
+    let noiseCharArray = [];
+
+    try {
+        const ascii = getAscii(q.question);
+        if (ascii) {
+            noiseCharArray = JSON.parse(ascii);
+        } else {
+            noiseCharArray = [];
+        }
+    } catch (error) {
+        noiseCharArray = [];
+    }
+
     let noise3D;
     let gradient = "▚▀▒░#@/*+=-:·";
     // gradient = "█▉▊▋▌▍▎▏";
@@ -15,19 +28,18 @@
     // gradient = "█▇▆▅▄▃▂▁▓▉▊▋▌▍▎▏▒░■□▪▫#@&%$O0o+=~-^:,._`'·";
     // gradient = "█▍▎▏▚▀▓▉▊▋▌▍▎▏■□▪▫#@&%$O0o+=~-^:,._`'·";
     gradient = "█▍▎▏▚▀▓▒░#@■□▪▫/*+=-:·";
+    const fixedChars = new Set(["#", "▓"]);
 
     let gradientOpacities = {};
     const minOpacity = 0.0;
     const maxOpacity = 1.0;
     const gradientLength = gradient.length;
-    gradient
-        .split("")
-        // .reverse()
-        .forEach((char, index) => {
-            gradientOpacities[char] =
-                maxOpacity -
-                (index * (maxOpacity - minOpacity)) / (gradientLength - 1);
-        });
+
+    gradient.split("").forEach((char, index) => {
+        gradientOpacities[char] =
+            maxOpacity -
+            (index * (maxOpacity - minOpacity)) / (gradientLength - 1);
+    });
 
     noise3D = function () {
         return 0;
@@ -47,6 +59,11 @@
         location.assign("/");
     }
 
+    function getAscii(question) {
+        const r = questions.find((d) => d.question == question);
+        return r?.ascii;
+    }
+
     function getCartridge(question) {
         const r = questions.find((d) => d.question == question);
         return r?.cartridge;
@@ -57,13 +74,21 @@
         return r?.color;
     }
 
+    let fixedCharCount = 0;
+
+    if (noiseCharArray.length > 0) {
+        fixedCharCount = noiseCharArray.filter((char) =>
+            fixedChars.has(char),
+        ).length;
+    }
+
     $: characters = q.data
         .map((d) => d.answer.trim().length + 1)
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
     $: loremChar =
-        Number(getCartridge(q.question)) - characters > 0
-            ? Number(getCartridge(q.question)) - characters
+        Number(getCartridge(q.question)) - characters - fixedCharCount > 0
+            ? Number(getCartridge(q.question)) - characters - fixedCharCount
             : 0;
 
     let scale =
@@ -116,7 +141,7 @@
                 content: `${d.answer.trim()}`,
                 id: `text-${idx}-${d.answer.trim()}`,
             })),
-            ...Array(loremChar + 500) // Adding extra empty characters
+            ...Array(loremChar + fixedCharCount)
                 .fill()
                 .map((_, idx) => ({
                     type: "empty",
@@ -129,39 +154,67 @@
             shuffleArray(combinedArray);
         }
 
-        let cumulativeLength = 0; // Track the cumulative length of text characters
+        let cumulativeLength = 0;
+        let noiseIndex = 0;
+        let logArray = [];
 
         combinedArray = combinedArray.flatMap((item, index) => {
             if (item.type === "text") {
-                // Process text characters, updating the cumulative length
-                const result = item.content.split("").map((char, charIdx) => {
-                    const x = (cumulativeLength + charIdx) % charleng; // Adjust for the length of the text
-                    const y = Math.floor(
-                        (cumulativeLength + charIdx) / charleng,
-                    );
-                    const noiseChar = getNoiseCharacter(x, y, t);
-                    return {
-                        type: "char",
-                        content: char,
-                        noiseChar: noiseChar,
-                        opacity: gradientOpacities[noiseChar],
-                        id: `char-${index}-${charIdx}-${item.id}`,
-                    };
-                });
-                cumulativeLength += item.content.length;
+                const result = [];
+                let textIndex = 0; // Reset textIndex for each new text item
+
+                while (textIndex < item.content.length) {
+                    const x = cumulativeLength % charleng;
+                    const y = Math.floor(cumulativeLength / charleng);
+
+                    const noiseChar =
+                        noiseCharArray.length > 0
+                            ? noiseCharArray[noiseIndex++]
+                            : getNoiseCharacter(x, y, t);
+
+                    if (!fixedChars.has(noiseChar)) {
+                        result.push({
+                            type: "char",
+                            content: item.content[textIndex],
+                            noiseChar: noiseChar,
+                            opacity: gradientOpacities[noiseChar],
+                            id: `char-${index}-${textIndex}-${item.id}`,
+                        });
+                        textIndex++;
+                    } else {
+                        result.push({
+                            type: "empty",
+                            content: noiseChar,
+                            fixed: true,
+                            opacity: gradientOpacities[noiseChar],
+                            id: `fixed-${index}-${cumulativeLength}-${x}-${y}`,
+                        });
+                    }
+                    logArray.push(noiseChar);
+                    cumulativeLength++;
+                }
                 return result;
             } else {
                 const x = cumulativeLength % charleng;
                 const y = Math.floor(cumulativeLength / charleng);
-                const noiseChar = getNoiseCharacter(x, y, t);
+                const noiseChar =
+                    noiseCharArray.length > 0
+                        ? noiseCharArray[noiseIndex++]
+                        : getNoiseCharacter(x, y, t);
+
                 const uniqueId = `empty-${index}-${cumulativeLength}-${x}-${y}`;
                 item.content = noiseChar;
+                item.fixed = fixedChars.has(noiseChar);
                 item.opacity = gradientOpacities[noiseChar];
                 item.id = uniqueId;
+
+                logArray.push(noiseChar);
                 cumulativeLength++;
                 return [item];
             }
         });
+
+        console.log(logArray);
 
         combinedArray.forEach((item, index) => {
             if (!item.id) {
@@ -171,13 +224,17 @@
     }
 
     onMount(() => {
-        fetch("simplex.js")
-            .then((e) => e.text())
-            .then((e) => {
-                const openSimplexNoise = new Function("return " + e)();
-                noise3D = openSimplexNoise(Date.now()).noise3D;
-                generateCombinedArray();
-            });
+        if (noiseCharArray.length === 0) {
+            fetch("simplex.js")
+                .then((e) => e.text())
+                .then((e) => {
+                    const openSimplexNoise = new Function("return " + e)();
+                    noise3D = openSimplexNoise(Date.now()).noise3D;
+                    generateCombinedArray();
+                });
+        } else {
+            generateCombinedArray(); // If noiseCharArray is provided, just generate the combined array
+        }
     });
 
     $: {
@@ -185,6 +242,7 @@
             reDraw();
         }
     }
+
     function mapValue(value, inMin, inMax, outMin, outMax) {
         return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
     }
@@ -192,36 +250,39 @@
 
 <div id={`poster-${i}`}>
     {#if submitted}
-        <!-- {scale} / {s} -->
         <button on:click={() => printPoster(i)}>Print</button>
-        <!-- <button on:click={() => reDraw()}>Change Pattern</button>
-        <button on:click={() => changeLayout()}
-            >{change ? "Shuffle Text" : "Sort text"}</button
-        > -->
     {/if}
     <section class="poster">
-        <p>{getCartridge(q.question)} characters for a collective poster.</p>
+        <p>
+            {getCartridge(q.question) - fixedCharCount} characters for a collective
+            poster.
+        </p>
         <p class="head">{q.question}</p>
 
         <div class="results" style="--theme-color: {getColor(q.question)}">
             {#each combinedArray as item (item.id)}
-                {#if item.type === "char"}
-                    <span class="word" style="display:inline-block;">
+                {#if item.content}
+                    {#if item.type === "char"}
+                        <span class="word" style="display:inline-block;">
+                            <span
+                                style="opacity: {item.opacity}; font-variation-settings: 'wght'{mapValue(
+                                    item.opacity,
+                                    minOpacity,
+                                    maxOpacity,
+                                    300,
+                                    1000,
+                                )};"
+                                class="text">{item.content}</span
+                            >
+                        </span>
+                    {:else}
                         <span
-                            style="opacity: {item.opacity}; font-variation-settings: 'wght'{mapValue(
-                                item.opacity,
-                                minOpacity,
-                                maxOpacity,
-                                300,
-                                1000,
-                            )};"
-                            class="text">{item.content}</span
+                            class="empty {item.fixed ? 'fixed' : ''}"
+                            style="color: {item.fixed
+                                ? getColor(q.question)
+                                : ''};">{item.content}</span
                         >
-                    </span>
-                {:else}
-                    <span class="empty" style="color:{getColor(q.question)}"
-                        >{item.content}</span
-                    >
+                    {/if}
                 {/if}
             {/each}
         </div>
@@ -229,7 +290,6 @@
         <div class="metadata">
             <p>{q.data.length} participations.</p>
             <p>{characters} characters used.</p>
-            <p>{loremChar} characters left.</p>
         </div>
         <div class="metadata">
             <p>Froh!</p>
@@ -250,7 +310,6 @@
         margin-bottom: 10px;
         font-size: 12px;
         line-height: 12px;
-        /* font-family: "sono", monospace; */
         font-family: "Recursive", monospace;
         word-break: break-all !important;
         user-select: none;
@@ -272,8 +331,12 @@
         color: black;
     }
 
+    .fixed {
+        /* visibility: hidden; */
+    }
+
     .empty {
-        color: rgb(200, 200, 200);
+        color: rgb(222, 222, 222);
     }
 
     button {
@@ -299,6 +362,10 @@
 
         .poster {
             border: none;
+        }
+
+        .fixed {
+            visibility: hidden;
         }
     }
 

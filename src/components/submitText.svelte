@@ -37,12 +37,12 @@
 
 <section>
     <section style="color: {colour}">
-        {#if $cartridge > 107}
+        {#if $cartridge > 113}
             <textarea
                 name="answer"
                 id="answer"
                 bind:value={text}
-                maxlength="321"
+                maxlength="113"
                 required
                 style="color: {colour}"
             ></textarea>
@@ -52,7 +52,7 @@
         {:else}
             <textarea
                 bind:value={text}
-                maxlength="107"
+                maxlength="113"
                 required
                 style="color: {colour}"
                 disabled
