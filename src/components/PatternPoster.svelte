@@ -9,24 +9,8 @@
 
     let noiseCharArray = [];
 
-    try {
-        const ascii = getAscii(q.question);
-        if (ascii) {
-            noiseCharArray = JSON.parse(ascii);
-        } else {
-            noiseCharArray = [];
-        }
-    } catch (error) {
-        noiseCharArray = [];
-    }
-
     let noise3D;
     let gradient = "▚▀▒░#@/*+=-:·";
-    // gradient = "█▉▊▋▌▍▎▏";
-    // gradient = "█▊▋▌▓▒░▍▎▏";
-    // gradient = "█▍▎▏▚▀▓▒░#@/*+=-:·";
-    // gradient = "█▇▆▅▄▃▂▁▓▉▊▋▌▍▎▏▒░■□▪▫#@&%$O0o+=~-^:,._`'·";
-    // gradient = "█▍▎▏▚▀▓▉▊▋▌▍▎▏■□▪▫#@&%$O0o+=~-^:,._`'·";
     gradient = "█▍▎▏▚▀▓▒░#@■□▪▫/*+=-:·";
     const fixedChars = new Set(["#", "▓"]);
 
@@ -136,11 +120,11 @@
 
     function generateCombinedArray() {
         combinedArray = [
-            ...q.data.map((d, idx) => ({
-                type: "text",
-                content: `${d.answer.trim()}`,
-                id: `text-${idx}-${d.answer.trim()}`,
-            })),
+            // ...q.data.map((d, idx) => ({
+            //     type: "text",
+            //     content: `${d.answer.trim()}`,
+            //     id: `text-${idx}-${d.answer.trim()}`,
+            // })),
             ...Array(loremChar + fixedCharCount)
                 .fill()
                 .map((_, idx) => ({
@@ -214,7 +198,7 @@
             }
         });
 
-        // console.log(logArray);
+        console.log(logArray);
 
         combinedArray.forEach((item, index) => {
             if (!item.id) {
