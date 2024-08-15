@@ -40,7 +40,7 @@
     {#if data.length > 0}
         <article class="container">
             {#each data as q, i}
-                <Poster {q} {i} {questions} submitted={true} staticPoster={true}/>
+                <Poster {q} {i} {questions} submitted={true} staticPoster={true} back={true}/>
             {/each}
         </article>
     {:else}

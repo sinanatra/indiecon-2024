@@ -6,6 +6,7 @@
     export let i;
     export let submitted;
     export let staticPoster;
+    export let back;
 
     let noiseCharArray = [];
 
@@ -26,9 +27,9 @@
     // gradient = "█▊▋▌▓▒░▍▎▏";
     // gradient = "█▍▎▏▚▀▓▒░#@/*+=-:·";
     // gradient = "█▇▆▅▄▃▂▁▓▉▊▋▌▍▎▏▒░■□▪▫#@&%$O0o+=~-^:,._`'·";
-    // gradient = "█▍▎▏▚▀▓▉▊▋▌▍▎▏■□▪▫#@&%$O0o+=~-^:,._`'·";
-    gradient = "█▍▎▏▚▀▓▒░#@■□▪▫/*+=-:·";
-    const fixedChars = new Set(["#", "▓"]);
+    gradient = "█▍▎▏▚▀▓▉▊▋▌▍▎▏■□▪▫#@&%$O0o+=~-^:,._`'·";
+    // gradient = "█▍▎▏▚▀▓▒░#@■□▪▫/*+=-:·";
+    const fixedChars = new Set(["░", "▓"]);
 
     let gradientOpacities = {};
     const minOpacity = 0.0;
@@ -83,7 +84,7 @@
     }
 
     $: characters = q.data
-        .map((d) => d.answer.trim().length + 1)
+        .map((d) => d.answer.trim().length)
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
     $: loremChar =
@@ -100,6 +101,7 @@
             ? Math.random() * (0.09 - 0.01) + 0.05
             : Math.random() * (0.09 - 0.03) + 0.01;
 
+  
     function getNoiseCharacter(x, y, t) {
         const noiseValue = noise3D(x * s, (y * s) / 0.5, t);
         const i = Math.floor((noiseValue * scale + scale) * gradient.length);
@@ -246,6 +248,18 @@
     function mapValue(value, inMin, inMax, outMin, outMax) {
         return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
     }
+
+    const now = new Date();
+
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const seconds = now.getSeconds().toString().padStart(2, "0");
+
+    const month = now.toLocaleString("en-US", { month: "short" });
+    const day = now.getDate().toString().padStart(2, "0");
+    const year = now.getFullYear();
+
+    const formattedDate = `${hours}:${minutes}:${seconds}, ${month} ${day} ${year}`;
 </script>
 
 <div id={`poster-${i}`}>
@@ -253,26 +267,30 @@
         <button on:click={() => printPoster(i)}>Print</button>
     {/if}
     <section class="poster">
-        <p>
-            {getCartridge(q.question) - fixedCharCount} characters for a collective
-            poster.
-        </p>
-        <p class="head">{q.question}</p>
+        <div class="meta">
+            <!-- <p>
+                {getCartridge(q.question)} total characters
+            </p>
+             -->
+            <!-- <p>{characters} characters used in total</p> -->
+            <div>
+                <p>You used {q.data[0]?.answer.length} characters</p>
+
+                <p>Contribution number: {q.data.length}</p>
+            </div>
+            <p>
+                {formattedDate}
+            </p>
+        </div>
+        <p class="head mt">{q.question}</p>
 
         <div class="results" style="--theme-color: {getColor(q.question)}">
             {#each combinedArray as item (item.id)}
                 {#if item.content}
                     {#if item.type === "char"}
                         <span class="word" style="display:inline-block;">
-                            <span
-                                style="opacity: {item.opacity}; font-variation-settings: 'wght'{mapValue(
-                                    item.opacity,
-                                    minOpacity,
-                                    maxOpacity,
-                                    300,
-                                    1000,
-                                )};"
-                                class="text">{item.content}</span
+                            <span style="opacity: {item.opacity};" class="text"
+                                >{item.content}</span
                             >
                         </span>
                     {:else}
@@ -287,24 +305,63 @@
             {/each}
         </div>
 
-        <div class="metadata">
-            <p>{q.data.length} participations.</p>
-            <p>{characters} characters used.</p>
-        </div>
-        <div class="metadata">
-            <p>Froh!</p>
-        </div>
+        <!-- <div class="meta mt">
+            <p>A project by Froh!</p>
+        </div> -->
     </section>
+    {#if back == true}
+        <section class="poster back">
+            <div class="meta">
+                <!-- <p>
+                {getCartridge(q.question)} total characters
+            </p>
+             -->
+                <!-- <p>{characters} characters used in total</p> -->
+                <div>
+                    <p>You used {q.data[0].answer.length} characters</p>
+
+                    <p>Contribution number: {q.data.length}</p>
+                </div>
+                <p>
+                    {formattedDate}
+                </p>
+            </div>
+            <p class="head mt">{q.question}</p>
+
+            <div class="results" style="--theme-color: {getColor(q.question)}">
+                {#each combinedArray as item (item.id)}
+                    {#if item.content}
+                        {#if item.type === "char"}
+                            <span class="word" style="display:inline-block;">
+                                <span
+                                    style="opacity: {item.opacity};"
+                                    class="text">{item.content}</span
+                                >
+                            </span>
+                        {:else}
+                            <span
+                                class="empty {item.fixed ? 'fixed' : ''}"
+                                style="color: {item.fixed
+                                    ? getColor(q.question)
+                                    : ''};">{item.content}</span
+                            >
+                        {/if}
+                    {/if}
+                {/each}
+            </div>
+        </section>
+    {/if}
 </div>
 
 <style>
     .poster {
         border-radius: 3px;
-        height: 1198px; /* a4 */
+        /*    height: 1198px;a4 */
         width: 842px; /* a4 */
-        height: 1684px; /* longer */
+
+        size: 20cm 35cm;
         flex: 0 0 842px;
-        padding: 10px;
+        padding: 20px;
         white-space: wrap;
         border: 1px dashed;
         margin-bottom: 10px;
@@ -313,6 +370,8 @@
         font-family: "Recursive", monospace;
         word-break: break-all !important;
         user-select: none;
+
+        /* opacity: 0.3; */
     }
 
     .results {
@@ -320,7 +379,29 @@
         align-items: center;
     }
 
-    .metadata {
+    .head {
+        font-family: Helvetica, sans-serif;
+        font-size: 32px;
+        line-height: 36px;
+        max-width: 700px;
+        break-inside: avoid;
+        margin-bottom: 10px;
+        display: block;
+        word-break: break-word !important;
+        height: 100px;
+        /* background: red; */
+    }
+
+    .meta {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+
+        /* flex-direction: row-reverse; */
+    }
+
+    .mt {
         margin-top: 20px;
         padding-top: 10px;
     }
@@ -335,6 +416,12 @@
         /* visibility: hidden; */
     }
 
+    .back .meta,
+    .back .head,
+    .back span:not(.fixed) {
+        visibility: hidden;
+    }
+
     .empty {
         color: rgb(222, 222, 222);
     }
@@ -345,10 +432,6 @@
         cursor: pointer;
     }
 
-    .head {
-        font-weight: bold;
-    }
-
     .word {
         min-width: 1ch;
     }
@@ -356,7 +439,8 @@
     @media print {
         @page {
             size: A4;
-            size: 8.77in 17.54in;
+            /* size: 8.66142in 13.7795in; */
+            size: 20cm 35cm;
             margin: 0;
         }
 
@@ -366,6 +450,10 @@
 
         .fixed {
             visibility: hidden;
+        }
+
+        .back .fixed {
+            visibility: visible !important;
         }
     }
 

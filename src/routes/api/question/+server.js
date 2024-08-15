@@ -6,7 +6,7 @@ export const GET = async ({ request, url }) => {
         const res = await db.collection('question')
             .find()
             .limit(20)
-            .toArray()
+            .toArray();
 
         return new Response(JSON.stringify(res), { status: 200 });
     } catch (error) {
@@ -14,14 +14,13 @@ export const GET = async ({ request, url }) => {
     }
 };
 
-
 export const POST = async ({ request }) => {
     try {
         const data = await request.json();
 
         if (data.question.length > 3) {
             const collection = await db.collection('question');
-            await collection.insertOne(data);
+            await collection.insertOne({ ...data, selected: false }); // Default to not selected
             return new Response(JSON.stringify(data), { status: 200 });
         } else {
             return new Response(JSON.stringify({ error: "Invalid data" }), { status: 422 });
@@ -36,21 +35,20 @@ export const PATCH = async ({ request }) => {
     try {
         const data = await request.json();
 
-        // if (!data.tags || data.tags.length === 0) {
-        //     return new Response(JSON.stringify({ error: "No tags provided" }), { status: 400 });
-        // }
-
         if (!data.id) {
             return new Response(JSON.stringify({ error: "No ID provided" }), { status: 400 });
         }
 
         const collection = await db.collection('question');
+
+        // First, unset the selected flag for all questions
+        await collection.updateMany({}, { $set: { selected: false } });
+
+        // Then, set the selected flag for the chosen question
         const result = await collection.updateOne(
-            { _id: new ObjectId(data.id) }, // Convert string ID to ObjectId
-            // { $addToSet: { tags: { $each: data.tags } } } // Use $each with $addToSet to handle array of tags
-
+            { _id: new ObjectId(data.id) },
+            { $set: { selected: true } }
         );
-
 
         if (result.modifiedCount === 0) {
             return new Response(JSON.stringify({ message: "No changes made or document not found" }), { status: 204 });
@@ -62,4 +60,3 @@ export const PATCH = async ({ request }) => {
         return new Response(JSON.stringify({ error: "Internal server error" }), { status: 500 });
     }
 };
-
