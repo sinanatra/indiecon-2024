@@ -101,7 +101,6 @@
             ? Math.random() * (0.09 - 0.01) + 0.05
             : Math.random() * (0.09 - 0.03) + 0.01;
 
-  
     function getNoiseCharacter(x, y, t) {
         const noiseValue = noise3D(x * s, (y * s) / 0.5, t);
         const i = Math.floor((noiseValue * scale + scale) * gradient.length);
@@ -313,12 +312,12 @@
         <section class="poster back">
             <div class="meta">
                 <!-- <p>
-                {getCartridge(q.question)} total characters
-            </p>
-             -->
+                    {getCartridge(q.question)} total characters
+                </p>
+                 -->
                 <!-- <p>{characters} characters used in total</p> -->
                 <div>
-                    <p>You used {q.data[0].answer.length} characters</p>
+                    <p>You used {q.data[0]?.answer.length} characters</p>
 
                     <p>Contribution number: {q.data.length}</p>
                 </div>
@@ -356,10 +355,9 @@
 <style>
     .poster {
         border-radius: 3px;
-        /*    height: 1198px;a4 */
+        /* height: 1511px; */
         width: 842px; /* a4 */
-
-        size: 20cm 35cm;
+        /* size: 20cm 35cm; */
         flex: 0 0 842px;
         padding: 20px;
         white-space: wrap;
@@ -446,7 +444,9 @@
 
         .poster {
             border: none;
+            page-break-after: always;
         }
+        
 
         .fixed {
             visibility: hidden;
