@@ -8,6 +8,7 @@
     let questions = [];
     let posters = [];
     let datum = "";
+    const day = 0;
 
     async function fetchData() {
         const res = await fetch(`/api/question`);
@@ -31,7 +32,10 @@
         data = await fetchData();
 
         posters = questions
-            .filter((d) => d.question == data[0].question)
+            .filter(
+                (d) =>
+                    d.question == data.find((d) => d.selected == true).question,
+            )
             .reduce((acc, entry) => {
                 const { question, answer } = entry;
                 const lastCluster = acc[acc.length - 1];
@@ -45,7 +49,7 @@
                 return acc;
             }, []);
 
-        datum = data[0];
+        datum = data.find((d) => d.selected == true);
         $question = datum.question;
 
         let noiseCharArray = [];
@@ -80,7 +84,6 @@
             ).length;
         }
 
-        console.log(noiseCharArray)
         $cartridge =
             datum.cartridge - remainingChar - fixedCharCount > 0
                 ? datum.cartridge - remainingChar - fixedCharCount
@@ -153,6 +156,18 @@
         margin-bottom: 2rem;
         max-width: 640px;
         font-size: 1rem;
+    }
+
+    h1 {
+        font-family: Helvetica, sans-serif;
+        font-size: 32px;
+        line-height: 36px;
+        max-width: 700px;
+        break-inside: avoid;
+        margin-bottom: 10px;
+        display: block;
+        word-break: break-word !important;
+        height: 100px;
     }
 
     .intro p {

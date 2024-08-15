@@ -6,10 +6,14 @@
 
     <a href="/pattern">Generate Pattern</a> —
 
-    <a href="/question">Write a new question</a> - 
-    
     <a href="/history">History</a>
 </nav>
+<nav>
+    <a href="/question">Write a new question</a> -
+    <a href="/ask">Select a question</a> -
+</nav>
+
+<slot />
 
 <style>
     nav {

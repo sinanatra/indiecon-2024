@@ -12,7 +12,9 @@
     let noise3D;
     let gradient = "▚▀▒░#@/*+=-:·";
     gradient = "█▍▎▏▚▀▓▒░#@■□▪▫/*+=-:·";
-    const fixedChars = new Set(["#", "▓"]);
+    // gradient = "█▍▎▏▚▀▓▉▊▋▌▍▎▏■□▪▫#@&%$O0o+=~-^:,._`'·";
+    // gradient = "█▍▎▏▚▀▓▒░#@■□▪▫/*+=-:·";
+    const fixedChars = new Set(["░", "▓"]);
 
     let gradientOpacities = {};
     const minOpacity = 0.0;
@@ -70,14 +72,11 @@
             ? Number(getCartridge(q.question)) - characters - fixedCharCount
             : 0;
 
-    let scale =
-        loremChar > getCartridge(q.question) / 2
-            ? Math.random() * (0.9 - 0.1) + 0.2
-            : Math.random() * (0.5 - 0.1) + 0.2;
-    let s =
-        loremChar > getCartridge(q.question) / 2
-            ? Math.random() * (0.09 - 0.01) + 0.05
-            : Math.random() * (0.09 - 0.03) + 0.01;
+    let scale = Math.random() * (0.9 - 0.1) + 0.1
+    let s = Math.random() * (0.09 - 0.01) + 0.03
+
+    // scale = .5;
+    // s = 0.07;
 
     function getNoiseCharacter(x, y, t) {
         const noiseValue = noise3D(x * s, (y * s) / 0.5, t);
