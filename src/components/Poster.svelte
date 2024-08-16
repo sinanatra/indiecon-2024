@@ -259,6 +259,12 @@
     const year = now.getFullYear();
 
     const formattedDate = `${hours}:${minutes}:${seconds}, ${month} ${day} ${year}`;
+
+    function getNumberWithOrdinal(n) {
+        var s = ["th", "st", "nd", "rd"],
+            v = n % 100;
+        return n + (s[(v - 20) % 10] || s[v] || s[0]);
+    }
 </script>
 
 <div id={`poster-${i}`}>
@@ -273,9 +279,10 @@
              -->
             <!-- <p>{characters} characters used in total</p> -->
             <div>
-                <p>You used {q.data[0]?.answer.length} characters</p>
-
-                <p>Contribution number: {q.data.length}</p>
+                <p>You used {q.data[0]?.answer.length} characters,</p>
+                <p>
+                    and are the {getNumberWithOrdinal(q.data.length)} contribution.
+                </p>
             </div>
             <p>
                 {formattedDate}
@@ -446,7 +453,6 @@
             border: none;
             page-break-after: always;
         }
-        
 
         .fixed {
             visibility: hidden;
