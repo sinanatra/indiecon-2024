@@ -19,28 +19,35 @@
 
     onMount(async () => {
         questions = await fetchQuestions();
-
         data = await fetchData();
-        data = data.reduce((acc, entry) => {
-        const { question, answer } = entry;
-            const lastCluster = acc[acc.length - 1];
 
-            if (!lastCluster || lastCluster.question !== question) {
-                acc.push({ question, data: [{ answer }] });
-            } else {
-                lastCluster.data.push({ answer });
+        const questionMap = new Map();
+        for (const entry of data) {
+            const { question, answer } = entry;
+            if (!questionMap.has(question)) {
+                questionMap.set(question, { question, data: [] });
             }
+            questionMap.get(question).data.push({ answer });
+        }
 
-            return acc;
-        }, []);
+        data = Array.from(questionMap.values());
     });
+
+    // $: console.log(data)
 </script>
 
 <article>
     {#if data.length > 0}
         <article class="container">
             {#each data as q, i}
-                <Poster {q} {i} {questions} submitted={true} staticPoster={true} back={true}/>
+                <Poster
+                    {q}
+                    {i}
+                    {questions}
+                    submitted={true}
+                    staticPoster={true}
+                    back={true}
+                />
             {/each}
         </article>
     {:else}
