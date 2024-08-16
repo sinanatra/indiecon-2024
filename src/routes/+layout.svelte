@@ -1,5 +1,4 @@
-<!-- <slot /> -->
-<nav>
+<!-- <nav>
     <a href="/">Start</a> —
     <a href="/recent">Recent</a> —
 
@@ -12,7 +11,7 @@
 <nav>
     <a href="/question">Write a new question</a> -
     <a href="/ask">Select a question</a> -
-</nav>
+</nav> -->
 
 <slot />
 
