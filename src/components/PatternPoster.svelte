@@ -72,8 +72,8 @@
             ? Number(getCartridge(q.question)) - characters - fixedCharCount
             : 0;
 
-    let scale = Math.random() * (0.9 - 0.1) + 0.1
-    let s = Math.random() * (0.09 - 0.01) + 0.03
+    let scale = Math.random() * (0.9 - 0.1) + 0.1;
+    let s = Math.random() * (0.09 - 0.01) + 0.03;
 
     // scale = .5;
     // s = 0.07;
@@ -232,12 +232,6 @@
         <button on:click={() => copyPoster(i)}>Copy</button>
     {/if}
     <section class="poster">
-        <p>
-            {getCartridge(q.question) - fixedCharCount} characters for a collective
-            poster.
-        </p>
-        <p class="head">{q.question}</p>
-
         <div class="results" style="--theme-color: {getColor(q.question)}">
             {#each combinedArray as item (item.id)}
                 {#if item.content}
@@ -265,14 +259,6 @@
                 {/if}
             {/each}
         </div>
-
-        <div class="metadata">
-            <p>{q.data.length} participations.</p>
-            <p>{characters} characters used.</p>
-        </div>
-        <div class="metadata">
-            <p>Froh!</p>
-        </div>
     </section>
 </div>
 
@@ -283,10 +269,7 @@
         width: 842px; /* a4 */
         height: 1684px; /* longer */
         flex: 0 0 842px;
-        padding: 10px;
         white-space: wrap;
-        border: 1px dashed;
-        margin-bottom: 10px;
         font-size: 12px;
         line-height: 12px;
         font-family: "Recursive", monospace;
@@ -295,7 +278,6 @@
     }
 
     .results {
-        margin-top: 10px;
         align-items: center;
     }
 
