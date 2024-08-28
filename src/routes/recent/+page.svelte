@@ -40,9 +40,16 @@
 
 <article>
     {#if data.length > 0}
+        <!-- <p>Feel free to decide whether you want to print it or not:</p> -->
         <article class="container">
             {#each data as q, i}
-                <Poster {q} {i} {questions} submitted={true} staticPoster={true}/>
+                <Poster
+                    {q}
+                    {i}
+                    {questions}
+                    submitted={true}
+                    staticPoster={true}
+                />
             {/each}
         </article>
     {:else}

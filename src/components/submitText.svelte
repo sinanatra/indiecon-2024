@@ -48,7 +48,11 @@
             ></textarea>
             <!-- the max length == same as one line -->
 
-            <button on:click={handleSubmit}>Submit</button>
+            {#if text.length > 0}
+                <button on:click={handleSubmit}>Submit</button>
+            {:else}
+                <button disabled>Submit</button>
+            {/if}
         {:else}
             <textarea
                 bind:value={text}
@@ -73,11 +77,11 @@
     }
 
     textarea {
-        border: 1px dashed;
+        border: 1px dashed rgb(54, 54, 54);
         background-color: rgb(248, 248, 248);
         border-radius: 3px;
         width: 100%;
-        height: 350px;
+        height: 300px;
         resize: none;
         max-width: 100%;
         font-family: "Recursive", monospace;
@@ -97,8 +101,12 @@
         background-color: rgb(248, 248, 248);
         color: black;
         margin-top: 5px;
+        padding: 5px 10px;
         cursor: pointer;
-        font-size: 24px;
+        font-family: Arial, sans-serif;
+        /* width: 100%;
+        min-height: 80px; */
+        font-size: 40px;
         border-radius: 5px;
     }
 
@@ -108,6 +116,7 @@
     }
 
     *:disabled {
+        color: rgb(105, 105, 105);
         cursor: not-allowed;
     }
 </style>
