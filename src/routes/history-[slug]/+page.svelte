@@ -1,13 +1,13 @@
 <script>
     import { onMount } from "svelte";
-    import Poster from "@components/Poster.svelte";
+    import HistoryPoster from "@components/HistoryPoster.svelte";
 
     let questions = [];
     let answers = [];
     let history = [];
     let currentIndex = 0;
     let intervalId;
-    let ms = 2000;
+    let ms = 1000;
     let question = "";
     let datum = [];
 
@@ -86,7 +86,7 @@
 <article>
     {#if question && splitData && datum}
         <article class="container">
-            <Poster q={splitData} i={currentIndex} {questions} />
+            <HistoryPoster q={splitData} i={currentIndex} {questions} />
         </article>
     {:else}
         <p>Loading...</p>
@@ -95,8 +95,8 @@
 
 <style>
     article {
-        padding: 10px;
         background-color: white;
+        background-color: rgb(254, 255, 231);
     }
 
     .container {
