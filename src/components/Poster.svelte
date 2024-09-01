@@ -462,11 +462,35 @@
             visibility: visible !important;
         }
     }
+    button {
+        border: none;
+        background-color: rgb(248, 248, 248);
+        color: black;
+        margin-top: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        font-family: Arial, sans-serif;
+        /* width: 100%;
+        min-height: 80px; */
+        font-size: 40px;
+        border-radius: 5px;
+        /* border: 1px solid blue; */
+    }
 
-    @font-face {
+    button:not(:disabled):hover {
+        background-color: blue;
+        color: white;
+    }
+
+    *:disabled {
+        color: rgb(105, 105, 105);
+        cursor: not-allowed;
+    }
+
+    /* @font-face {
         font-family: "sono";
         src: url("fonts/sono.ttf") format("truetype");
         font-weight: normal;
         font-style: normal;
-    }
+    } */
 </style>
