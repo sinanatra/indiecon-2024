@@ -273,10 +273,11 @@
     {/if}
     <section class="poster">
         <div class="meta">
-            <p>
+            <!-- <p>
                 {getCartridge(q.question)} total characters
-            </p>
-            
+            </p> -->
+            <p>10000 total characters</p>
+
             <p>{characters} characters used in total</p>
             <!-- <div>
                 <p>You used {q.data[0]?.answer.length} characters,</p>
