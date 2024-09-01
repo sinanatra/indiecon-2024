@@ -270,6 +270,9 @@
 <div id={`poster-${i}`}>
     {#if submitted}
         <button on:click={() => printPoster(i)}>Print</button>
+        <button>
+            <a href="/">Restart</a>
+        </button>
     {/if}
     <section class="poster">
         <div class="meta">
@@ -431,12 +434,6 @@
         color: rgb(222, 222, 222);
     }
 
-    button {
-        position: relative;
-        margin-bottom: 20px;
-        cursor: pointer;
-    }
-
     .word {
         min-width: 1ch;
     }
@@ -463,6 +460,9 @@
         }
     }
     button {
+        position: relative;
+        margin-bottom: 20px;
+        cursor: pointer;
         border: none;
         background-color: rgb(248, 248, 248);
         color: black;
@@ -475,6 +475,10 @@
         font-size: 40px;
         border-radius: 5px;
         /* border: 1px solid blue; */
+    }
+
+    button a {
+        text-decoration: none;
     }
 
     button:not(:disabled):hover {
