@@ -19,6 +19,7 @@ Run
 Run Locally 
 -----
 
+0. Install [node](https://nodejs.org/en/download/package-manager)
 0. Edit the .env file adding: `DB_URI=mongodb://localhost:27017
 `
 1. You don’t have brew? Find a way to install it, as well as python3
