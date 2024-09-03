@@ -20,9 +20,8 @@ Run Locally
 -----
 
 0. Install [node](https://nodejs.org/en/download/package-manager)
-0. Edit the .env file adding: `DB_URI=mongodb://localhost:27017
-`
-1. You don’t have brew? Find a way to install it, as well as python3
+0. Edit the .env file adding: `DB_URI=mongodb://localhost:27017`
+1. You don’t have [brew](https://brew.sh/)? Find a way to install it, as well as [python3](https://www.python.org/downloads/)
 2. `brew tap mongodb/brew`
 3. `brew install mongodb-community@7.0`
 4. `brew services start mongodb-community@7.0`
