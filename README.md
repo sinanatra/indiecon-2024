@@ -19,6 +19,8 @@ Run
 Run Locally 
 -----
 
+0. Edit the .env file adding: `DB_URI=mongodb://localhost:27017
+`
 1. You don’t have brew? Find a way to install it, as well as python3
 2. `brew tap mongodb/brew`
 3. `brew install mongodb-community@7.0`
